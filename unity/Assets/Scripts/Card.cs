@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
+public delegate void CardDroppedEventHandler(Card card);
+
 public class Card : FSprite, FSingleTouchableInterface
 {
-
+	public event CardDroppedEventHandler dropHandler;
+	
 	private FAtlasElement back;
 	private FAtlasElement front;
 
@@ -14,7 +17,7 @@ public class Card : FSprite, FSingleTouchableInterface
 	{
 		this.suit = suit;
 		this.value = value;
-		this.draggable = true;
+		this.draggable = false;
 	
 		//magic numbers... these come from the photoshop layout.
 		//TODO: make this dynamic
@@ -54,7 +57,6 @@ public class Card : FSprite, FSingleTouchableInterface
 			return false;
 		}
 
-		Debug.Log (this.GetTextureRectRelativeToContainer() + "     vs    " + touch.position);
 		if (!this.GetTextureRectRelativeToContainer().Contains (touch.position)) 
 		{
 			return false;
@@ -83,11 +85,19 @@ public class Card : FSprite, FSingleTouchableInterface
 	public void HandleSingleTouchEnded(FTouch touch)
 	{
 		isDragging = false;
+		if (dropHandler != null) 
+		{
+			dropHandler(this);
+		}
 	}
 	
 	public void HandleSingleTouchCanceled(FTouch touch)
 	{
 		isDragging = false;
+		if (dropHandler != null) 
+		{
+			dropHandler(this);
+		}
 	}
 }
 
