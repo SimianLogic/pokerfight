@@ -103,12 +103,21 @@ public class Pokerfight : MonoBehaviour {
 
 	void dealCard()
 	{
+		if(activeCard != null)
+		{
+			activeCard.draggable = false;
+			activeCard.dropHandler -= cardDroppedHandler;
+		}
+
 		activeCard = deck [0];
+		deck.RemoveAt(0);
 
 		Futile.stage.AddChild (activeCard);
-		activeCard.x = positions ["dealt_card"].x + activeCard.width/2;
-		activeCard.y = positions ["dealt_card"].y - activeCard.height/2;
+		activeCard.x = positions ["deck"].x + activeCard.width/2;
+		activeCard.y = positions ["deck"].y - activeCard.height/2;
 		activeCard.show ();
+
+		Go.to(activeCard, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x + activeCard.width/2).floatProp("y",positions ["dealt_card"].y - activeCard.height/2).setEaseType(EaseType.BackIn));
 
 		activeCard.draggable = true;
 		activeCard.dropHandler += cardDroppedHandler;//new CardDroppedEventHandler(cardDroppedHandler);
@@ -149,8 +158,15 @@ public class Pokerfight : MonoBehaviour {
 			{
 				if(attack[i] == null)
 				{
-//					attack[i] = activeCard;
+					attack[i] = activeCard;
 					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["attack_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+					if(deck.Count > 42)
+					{
+						dealCard();
+					}else{
+						Debug.Log ("DECK HAS " + deck.Count);
+						resolveAttack();
+					}
 					return;
 				}
 			}
@@ -160,8 +176,15 @@ public class Pokerfight : MonoBehaviour {
 			{
 				if(defense[i] == null)
 				{
-//					defense[i] = activeCard;
+					defense[i] = activeCard;
 					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["defense_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+					if(deck.Count > 42)
+					{
+						Debug.Log ("DECK HAS " + deck.Count);
+						dealCard();
+					}else{
+						resolveAttack();
+					}
 					return;
 				}
 			}
@@ -169,6 +192,11 @@ public class Pokerfight : MonoBehaviour {
 		}
 
 		Go.to(card, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x + activeCard.width/2).floatProp("y",positions ["dealt_card"].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+	}
+
+	void resolveAttack()
+	{
+		Debug.Log ("KILL!");
 	}
 	
 	// Update is called once per frame
