@@ -75,9 +75,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>-1</int>
+            <int>2048</int>
             <key>height</key>
-            <int>-1</int>
+            <int>2048</int>
         </QSize>
         <key>reduceBorderArtifacts</key>
         <false/>

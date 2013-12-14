@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Pokerfight.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Pokerfight.cs" Line="26" Column="68" />
+      <File FileName="Assets/Scripts/Card.cs" Line="15" Column="22" />
+      <File FileName="Assets/Resources/all_cards.txt" Line="437" Column="1" />
+      <File FileName="Assets/Futile/Core/FAtlasManager.cs" Line="251" Column="55" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

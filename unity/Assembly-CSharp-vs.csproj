@@ -93,8 +93,10 @@
      <Compile Include="Assets\Futile\ThirdParty\MiniJson.cs" />
      <Compile Include="Assets\Scripts\Card.cs" />
      <Compile Include="Assets\Scripts\Pokerfight.cs" />
+     <None Include="Assets\Resources\board_layout.txt" />
      <None Include="Assets\Futile\Resources\Shaders\AdditiveColor.shader" />
      <None Include="Assets\Futile\Resources\Shaders\Additive.shader" />
+     <None Include="Assets\Resources\monaco_36.fnt" />
      <None Include="Assets\Futile\Resources\Shaders\SolidColored.shader" />
      <None Include="Assets\Resources\all_cards.txt" />
      <None Include="Assets\Futile\Resources\Shaders\Basic.shader" />

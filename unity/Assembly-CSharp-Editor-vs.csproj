@@ -48,8 +48,10 @@
   <ItemGroup>
      <Compile Include="Assets\Futile\Rix\Editor\RXProfilerEditor.cs" />
      <Compile Include="Assets\Futile\Rix\Editor\RXWatcherLinkEditor.cs" />
+     <None Include="Assets\Resources\board_layout.txt" />
      <None Include="Assets\Futile\Resources\Shaders\AdditiveColor.shader" />
      <None Include="Assets\Futile\Resources\Shaders\Additive.shader" />
+     <None Include="Assets\Resources\monaco_36.fnt" />
      <None Include="Assets\Futile\Resources\Shaders\SolidColored.shader" />
      <None Include="Assets\Resources\all_cards.txt" />
      <None Include="Assets\Futile\Resources\Shaders\Basic.shader" />
