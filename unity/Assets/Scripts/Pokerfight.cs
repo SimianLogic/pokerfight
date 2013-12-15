@@ -20,8 +20,6 @@ public class Pokerfight : MonoBehaviour
 	private BoardScreen board;
 	private MenuScreen menu;
 	private BattleOverlay battle;
-	
-	private bool hasBattle; //are we showing the battle alert?
 
 	void Start () {
 		//init
@@ -40,6 +38,7 @@ public class Pokerfight : MonoBehaviour
 
 		board = new BoardScreen ();
 		board.onGameOver += handleGameOver;
+		board.onCombat += handleCombat;
 
 		menu = new MenuScreen ();
 		menu.startHandler += onMenuStart;
@@ -48,22 +47,7 @@ public class Pokerfight : MonoBehaviour
 		battle = new BattleOverlay();
 		battle.onContinue += onBattleContinue;
 	}
-
-	public void handleGameOver(Character player)
-	{
-		//TODO: cache our best heroes for later...
-		//TODO: move us to game over screen...
-
-		//come back to the menu: new character!
-		battle.RemoveFromContainer();
-		hasBattle = false;
-		
-		menu.player.randomize();
-		menu.player.setSword (1);
-		menu.player.setShield (1);
-		loadScreen (menu);
-	}
-
+	
 	//adapted a bit from the Banana demo in Futile
 	public void loadScreen(GameScreen screen, ScreenSourceDirection direction=ScreenSourceDirection.Instant)
 	{
@@ -76,7 +60,7 @@ public class Pokerfight : MonoBehaviour
 			screen.didShow();
 			return;
 		}
-
+		
 		if (direction == ScreenSourceDirection.Instant) 
 		{
 			Futile.stage.RemoveChild (currentScreen);
@@ -87,18 +71,56 @@ public class Pokerfight : MonoBehaviour
 			return;
 		}
 	}
-
-	public void onMenuStart(Character player)
+	
+	
+	
+	//------------- BOARD SCREEN LISTENERS
+	public void handleCombat(Character attacker)
 	{
-		if(hasBattle) return;
+		board.AddChild (battle);
 		
+		//update levels and healths and such
+		battle.player.mimic (board.player);
+		battle.enemy.mimic (board.enemy);
+		battle.refresh ();
+		
+		//important to pass battle's characters for equality checks
+		if(attacker == board.player)
+		{
+			battle.playSequence(battle.player, battle.enemy);
+		}else{
+			battle.playSequence (battle.enemy, battle.player);
+		}
+	}
+	
+	
+	public void handleGameOver()
+	{
+		//TODO: cache our best heroes for later...
+		//TODO: move us to game over screen...
+
+		//come back to the menu: new character!
+		battle.RemoveFromContainer();
+		menu.buttons["start"].isEnabled = true;
+		
+		menu.player.randomize();
+		menu.player.setSword (1);
+		menu.player.setShield (1);
+		loadScreen (menu);
+	}
+
+	
+	//------------- MENU LISTENERS
+	public void onMenuStart(Character player)
+	{	
+		menu.buttons["start"].isEnabled = false;
 		menu.AddChild(battle);
-		hasBattle = true;
 		
 		battle.player.mimic (menu.player);
 		battle.enemy.randomize();
 	}
 	
+	//------------- BATTLE ALERT LISTENERS
 	public void onBattleContinue()
 	{
 		if(currentScreen == menu)
@@ -107,6 +129,18 @@ public class Pokerfight : MonoBehaviour
 			board.enemy.mimic (battle.enemy);
 			
 			loadScreen (board, ScreenSourceDirection.Instant);			
+		}
+		
+		if(currentScreen == board)
+		{
+			board.player.mimic (battle.player);
+			board.enemy.mimic (battle.enemy);
+			board.refresh();
+			
+			board.RemoveChild (battle);
+			
+			board.willShow();
+			board.didShow();
 		}
 	}
 	

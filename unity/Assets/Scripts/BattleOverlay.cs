@@ -102,11 +102,11 @@ public class BattleOverlay : GameScreen
 	}
 	
 	private Character attacker;
-	public void playSequence(Character attacker, Character defender, PokerHand attacker_hand, PokerHand defender_hand)
+	public void playSequence(Character attacker, Character defender)
 	{
 		this.attacker = attacker;
 		
-		showHands(attacker_hand, defender_hand);
+		showHands(attacker.attackStance, defender.defenseStance);
 	}
 	
 	public void continueHandler(FButton button)
@@ -115,15 +115,6 @@ public class BattleOverlay : GameScreen
 		{
 			onContinue();
 		}
-		
-//		PokerHand top = Card.randomHand();
-//		PokerHand bot = Card.randomHand();
-//		if(RXRandom.Float() > 0.5)
-//		{
-//			playSequence(player, enemy, top, bot);
-//		}else{
-//			playSequence(enemy, player, top, bot);
-//		}
 	}
 	
 	public void showSlash()

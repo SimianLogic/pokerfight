@@ -39,6 +39,8 @@ public class Character : MetaContainer
 	public int coins;
 	public int attackLevel;
 	public int defenseLevel;
+	public PokerHand attackStance;
+	public PokerHand defenseStance;
 
 	public Character(int face_id=1, int head_id=0, int hat_id=-1, int torso_id=0, int legs_id=0, int feet_id=0, int bow_id=-1, int sword_id=-1, int shield_id=-1) : base()
 	{
@@ -47,6 +49,8 @@ public class Character : MetaContainer
 		
 		attackLevel = 1;
 		defenseLevel = 1;
+		attackStance = PokerHand.Junk;
+		defenseStance = PokerHand.Junk;
 
 		//the order is important here for layering
 		setHead (head_id);
@@ -99,6 +103,8 @@ public class Character : MetaContainer
 		coins = target.coins;
 		attackLevel = target.attackLevel;
 		defenseLevel = target.defenseLevel;
+		attackStance = target.attackStance;
+		defenseStance = target.defenseStance;
 	}
 
 	public float height{
