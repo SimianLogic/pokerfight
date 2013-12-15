@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\MenuScreen.cs" />
      <Compile Include="Assets\Scripts\MetaContainer.cs" />
      <Compile Include="Assets\Scripts\Pokerfight.cs" />
+     <Compile Include="Assets\Scripts\RecapScreen.cs" />
      <None Include="Assets\Resources\board_layout.txt" />
      <None Include="Assets\Futile\Resources\Shaders\AdditiveColor.shader" />
      <None Include="Assets\Futile\Resources\Shaders\Additive.shader" />

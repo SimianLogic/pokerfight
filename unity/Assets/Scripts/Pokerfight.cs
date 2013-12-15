@@ -20,6 +20,7 @@ public class Pokerfight : MonoBehaviour
 	private BoardScreen board;
 	private MenuScreen menu;
 	private BattleOverlay battle;
+	private RecapScreen recap;
 
 	void Start () {
 		//init
@@ -42,10 +43,15 @@ public class Pokerfight : MonoBehaviour
 
 		menu = new MenuScreen ();
 		menu.startHandler += onMenuStart;
-		loadScreen (menu);
-	
+
 		battle = new BattleOverlay();
 		battle.onContinue += onBattleContinue;
+		
+		recap = new RecapScreen();
+		recap.onContinue += onRecapContinue;
+		
+		recap.showLose ();
+		loadScreen (recap);
 	}
 	
 	//adapted a bit from the Banana demo in Futile
@@ -118,6 +124,12 @@ public class Pokerfight : MonoBehaviour
 		
 		battle.player.mimic (menu.player);
 		battle.enemy.randomize();
+	}
+	
+	//------------- RECAP ALERT LISTENERS
+	public void onRecapContinue()
+	{
+		
 	}
 	
 	//------------- BATTLE ALERT LISTENERS
