@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameScreen : FContainer
+public class MetaContainer : FContainer
 {
 
 	public string metadata;
@@ -10,7 +10,7 @@ public class GameScreen : FContainer
 	public Dictionary<string, FLabel> labels;
 	public Dictionary<string, FButton> buttons;
 	
-	public GameScreen(string metadata)
+	public MetaContainer(string metadata)
 	{	
 		this.metadata = metadata;
 		processMetadata ();
@@ -77,17 +77,6 @@ public class GameScreen : FContainer
 			}
 		}
 		
-		
-	}
-
-	// Use this for initialization
-	virtual public void willShow ()
-	{
-		
-	}
-	// Use this for initialization
-	virtual public void didShow ()
-	{
 		
 	}
 

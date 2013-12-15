@@ -10,7 +10,18 @@ public class MenuScreen : GameScreen
 		background.y = 384;
 		this.AddChildAtIndex (background, 0);
 
+		this.buttons ["randomize"].SignalPress += randomizeHandler;
+		this.buttons ["start"].SignalPress += startHandler;
+	}
 
+	public void randomizeHandler(FButton button)
+	{
+		Debug.Log ("TODO: RANDOMIZE");
+	}
+
+	public void startHandler(FButton button)
+	{
+		Debug.Log ("TODO: START");
 	}
 
 	override public void willShow()
