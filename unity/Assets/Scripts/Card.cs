@@ -115,7 +115,26 @@ public class Card : FSprite, FSingleTouchableInterface
 			dropHandler(this);
 		}
 	}
-
+	
+	public static string stringForHand(PokerHand hand)
+	{
+		if(hand == PokerHand.OnePair) return "One_Pair";
+		if(hand == PokerHand.TwoPair) return "Two_Pair";
+		if(hand == PokerHand.ThreeOfAKind) return "Three_of_a_Kind";
+		if(hand == PokerHand.Straight) return "Straight";
+		if(hand == PokerHand.Flush) return "Flush";
+		if(hand == PokerHand.FullHouse) return "Full_House";
+		if(hand == PokerHand.FourOfAKind) return "Four_of_a_Kind";
+		if(hand == PokerHand.StraightFlush) return "Straight_Flush";
+		if(hand == PokerHand.RoyalFlush) return "Royal_Flush";
+		
+		return "JUNK";
+	}
+	public static PokerHand randomHand()
+	{
+		return (PokerHand)RXRandom.Range((int)PokerHand.Junk, (int)PokerHand.RoyalFlush + 1);
+	}
+	
 	public static PokerHand classifyHand(Card[] hand)
 	{
 		List<Card> hand_list = new List<Card>(hand);

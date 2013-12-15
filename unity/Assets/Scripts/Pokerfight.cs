@@ -19,6 +19,7 @@ public class Pokerfight : MonoBehaviour
 	//screens
 	private BoardScreen board;
 	private MenuScreen menu;
+	private BattleOverlay battle;
 
 	void Start () {
 		//init
@@ -33,7 +34,7 @@ public class Pokerfight : MonoBehaviour
 		Futile.atlasManager.LoadAtlas("board_layout");
 
 		//font
-		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -18.0f);
+		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -30.0f);
 
 		board = new BoardScreen ();
 		board.onGameOver += handleGameOver;
@@ -41,6 +42,10 @@ public class Pokerfight : MonoBehaviour
 		menu = new MenuScreen ();
 		menu.startHandler += onMenuStart;
 		loadScreen (menu);
+		
+		battle = new BattleOverlay();
+		Futile.stage.AddChild(battle);
+		currentScreen = battle;
 	}
 
 	public void handleGameOver(Character player)
@@ -79,6 +84,8 @@ public class Pokerfight : MonoBehaviour
 
 	public void onMenuStart(Character player)
 	{
+		if(currentScreen != menu) return;
+		
 		board.player.mimic (player);
 		loadScreen (board, ScreenSourceDirection.Instant);
 	}

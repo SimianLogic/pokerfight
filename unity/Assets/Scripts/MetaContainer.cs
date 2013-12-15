@@ -9,6 +9,7 @@ public class MetaContainer : FContainer
 	public Dictionary<string, Vector2> positions;
 	public Dictionary<string, FLabel> labels;
 	public Dictionary<string, FButton> buttons;
+	public Dictionary<string, FSprite> progress;
 
 	public MetaContainer() : base()
 	{
@@ -21,12 +22,35 @@ public class MetaContainer : FContainer
 		this.metadata = metadata;
 		processMetadata (768);
 	}
-
+	
+	public void setText(string field, string text)
+	{
+		labels[field].text = text;
+		labels[field].x = positions[field].x;
+		labels[field].y = positions[field].y;
+		
+		Debug.Log ("put " + field + " at (" + positions[field] + ")");
+	}
+	
+	internal void addProgressBar(string name, string position_name, string fill_name)
+	{
+		FSprite progress_bar = new FSprite(fill_name);
+		progress_bar.anchorX = 0.0f;
+		
+		this.AddChild(progress_bar);
+		
+		progress_bar.x = positions[position_name].x;
+		progress_bar.y = positions[position_name].y - progress_bar.height/2;
+		
+		progress[name] = progress_bar;
+	}
+	
 	internal void processMetadata(int maxHeight)
 	{
-		positions = new Dictionary<string,Vector2> ();
-		labels = new Dictionary<string, FLabel> ();
-		buttons = new Dictionary<string, FButton> ();
+		positions = new Dictionary<string,Vector2>();
+		labels = new Dictionary<string, FLabel>();
+		buttons = new Dictionary<string, FButton>();
+		progress = new Dictionary<string, FSprite>();
 
 		string[] objects = metadata.Split(":"[0]);
 
@@ -37,7 +61,6 @@ public class MetaContainer : FContainer
 			
 			int x = System.Int32.Parse(data[1]);
 			int y = maxHeight - System.Int32.Parse(data[2]);
-
 
 			if(type == "btn"){
 				if(data[0].IndexOf("_down") >= 0)

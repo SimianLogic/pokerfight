@@ -1,12 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Character.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Pokerfight.cs">
     <Files>
-      <File FileName="Assets/Scripts/Pokerfight.cs" Line="44" Column="1" />
-      <File FileName="Assets/Scripts/Character.cs" Line="75" Column="45" />
-      <File FileName="Assets/Scripts/MenuScreen.cs" Line="6" Column="1" />
-      <File FileName="Assets/Scripts/MetaContainer.cs" Line="25" Column="11" />
-      <File FileName="Assets/Scripts/BoardScreen.cs" Line="5" Column="38" />
+      <File FileName="Assets/Scripts/Pokerfight.cs" Line="46" Column="32" />
+      <File FileName="Assets/Scripts/BoardScreen.cs" Line="44" Column="3" />
+      <File FileName="Assets/Scripts/BattleOverlay.cs" Line="42" Column="17" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
