@@ -1,7 +1,23 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public delegate void CardDroppedEventHandler(Card card);
+
+public enum PokerHand
+{
+	Junk,
+	OnePair,
+	TwoPair,
+	ThreeOfAKind,
+	Straight,
+	Flush,
+	FullHouse,
+	FourOfAKind,
+	StraightFlush,
+	RoyalFlush
+}
 
 public class Card : FSprite, FSingleTouchableInterface
 {
@@ -99,5 +115,71 @@ public class Card : FSprite, FSingleTouchableInterface
 			dropHandler(this);
 		}
 	}
+
+	public static PokerHand classifyHand(Card[] hand)
+	{
+		List<Card> hand_list = new List<Card>(hand);
+		List<Card> sorted_hand = hand_list.OrderBy(x => x.value).ToList();
+		
+		bool isRoyal = sorted_hand[0].value == 10; //in combination with isFlush and isStraight
+		bool isFlush = true;
+		bool isStraight = true;
+		
+		Card lastCard = null;
+		List<int> counts = new List<int>();
+		int tally = 1;
+		int pairs = 0;
+		int trips = 0;
+		int quads = 0;
+		foreach(Card card in sorted_hand)
+		{
+			if(lastCard == null)
+			{
+				lastCard = card;
+				continue;
+			}
+			
+			Debug.Log ("COMPARE " + card.value + " vs " + lastCard.value);
+			if(card.value == lastCard.value)
+			{
+				tally++;
+			}else{
+				Debug.Log ("HAD " + tally + " " + card.suit + "_" + card.value);
+				counts.Add (tally);
+				if(tally == 2) pairs++;
+				if(tally == 3) trips++;
+				if(tally == 4) quads++;
+				tally = 1;
+			}
+			
+			if(card.suit != lastCard.suit) isFlush = false;
+			if(card.value == 1)
+			{
+				if(lastCard.value != 13) isStraight = false;
+			}else{
+				if(lastCard.value + 1 != card.value) isStraight = false;
+			}
+			
+			lastCard = card;
+		}
+		if(tally == 2) pairs++;
+		if(tally == 3) trips++;
+		if(tally == 4) quads++;
+		Debug.Log ("HAD " + tally + sorted_hand[4].suit + "_" + sorted_hand[4].value);
+		
+		
+		if(isStraight && isFlush && isRoyal) return PokerHand.RoyalFlush;
+		if(isStraight && isFlush) return PokerHand.StraightFlush;
+		if(quads == 1) return PokerHand.FourOfAKind;
+		if(trips == 1 && pairs == 1) return PokerHand.FullHouse;
+		if(isFlush) return PokerHand.Flush;
+		if(isStraight) return PokerHand.Straight;
+		if(trips == 1) return PokerHand.ThreeOfAKind;
+		if(pairs == 2) return PokerHand.TwoPair;
+		if(pairs == 1) return PokerHand.OnePair;
+				
+		return PokerHand.Junk;		
+	}
+
 }
 

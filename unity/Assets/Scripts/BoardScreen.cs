@@ -137,13 +137,7 @@ public class BoardScreen : GameScreen
 	
 	private TweenConfig dealCardConfig;
 	void dealCard()
-	{
-		if(activeCard != null)
-		{
-			activeCard.draggable = false;
-			activeCard.dropHandler -= cardDroppedHandler;
-		}
-		
+	{	
 		activeCard = deck [0];
 		deck.RemoveAt(0);
 		
@@ -198,18 +192,22 @@ public class BoardScreen : GameScreen
 	void cardDroppedHandler(Card card)
 	{
 		Vector2 hit_test = new Vector2 (card.x, card.y);
+		activeCard = null;
+		card.draggable = false;
 		
 		for(int i = 0; i < 5; i++)
 		{
-			Rect attack_rect = new Rect(positions["attack_" + (i+1)].x, positions["attack_" + (i+1)].y - activeCard.height, activeCard.width, activeCard.height);
+			Rect attack_rect = new Rect(positions["attack_" + (i+1)].x, positions["attack_" + (i+1)].y - card.height, card.width, card.height);
 			Debug.Log (attack_rect + " vs " + hit_test);
 			if(attack_rect.Contains(hit_test))
 			{
 				if(attack[i] == null)
 				{
-					attack[i] = activeCard;
-					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["attack_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
-					activeCard = null;
+					attack[i] = card;
+					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x + card.width/2).floatProp("y",positions ["attack_" + (i+1)].y - card.height/2).setEaseType(EaseType.ExpoIn));
+					
+					card.dropHandler -= cardDroppedHandler;
+					
 					if(deck.Count > 42)
 					{
 						dealCard();
@@ -221,14 +219,16 @@ public class BoardScreen : GameScreen
 				}
 			}
 			
-			Rect defense_rect = new Rect(positions["defense_" + (i+1)].x, positions["defense_" + (i+1)].y - activeCard.height, activeCard.width, activeCard.height);
+			Rect defense_rect = new Rect(positions["defense_" + (i+1)].x, positions["defense_" + (i+1)].y - card.height, card.width, card.height);
 			if(defense_rect.Contains(hit_test))
 			{
 				if(defense[i] == null)
 				{
-					defense[i] = activeCard;
-					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["defense_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
-					activeCard = null;
+					defense[i] = card;
+					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x + card.width/2).floatProp("y",positions ["defense_" + (i+1)].y - card.height/2).setEaseType(EaseType.ExpoIn));
+					
+					card.dropHandler -= cardDroppedHandler;
+					
 					if(deck.Count > 42)
 					{
 						Debug.Log ("DECK HAS " + deck.Count);
@@ -242,12 +242,20 @@ public class BoardScreen : GameScreen
 			
 		}
 		
+		//NO TAKERS?
+		Debug.Log ("NO TAKERS -- GO HOME!");
+		activeCard = card;
+		card.draggable = true;
 		Go.to(card, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x + activeCard.width/2).floatProp("y",positions ["dealt_card"].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
 	}
 	
 	void resolveAttack()
 	{
-		Debug.Log ("KILL!");
+		PokerHand attackHand = Card.classifyHand(attack);
+		PokerHand defenseHand = Card.classifyHand(defense);
+		
+		Debug.Log ("ATTACK: " + attackHand);
+		Debug.Log ("DEFENSE: " + defenseHand);
 	}
 
 }
