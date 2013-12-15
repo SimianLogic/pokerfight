@@ -75,9 +75,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>-1</int>
+            <int>2048</int>
             <key>height</key>
-            <int>-1</int>
+            <int>2048</int>
         </QSize>
         <key>reduceBorderArtifacts</key>
         <false/>
@@ -238,7 +238,6 @@
             <filename>characters/hat_18.png</filename>
             <filename>board_layout/btn_surrender_down.png</filename>
             <filename>board_layout/btn_surrender_up.png</filename>
-            <filename>board_layout/progress_1_bg.png</filename>
             <filename>board_layout/progress_1_fill.png</filename>
             <filename>battle_screen.png</filename>
             <filename>modal.png</filename>
@@ -256,6 +255,105 @@
             <filename>battle_screen/Two_Pair.png</filename>
             <filename>battle_screen/p1_slash.png</filename>
             <filename>battle_screen/p2_slash.png</filename>
+            <filename>battle_screen/p1_health_progress_fill.png</filename>
+            <filename>battle_screen/p1_attack_progress_fill.png</filename>
+            <filename>characters/bow_1.png</filename>
+            <filename>characters/bow_2.png</filename>
+            <filename>characters/bow_3.png</filename>
+            <filename>characters/bow_4.png</filename>
+            <filename>characters/bow_5.png</filename>
+            <filename>characters/bow_6.png</filename>
+            <filename>characters/bow_7.png</filename>
+            <filename>characters/bow_8.png</filename>
+            <filename>characters/bow_9.png</filename>
+            <filename>characters/bow_10.png</filename>
+            <filename>characters/bow_11.png</filename>
+            <filename>characters/bow_12.png</filename>
+            <filename>characters/bow_13.png</filename>
+            <filename>characters/bow_14.png</filename>
+            <filename>characters/bow_15.png</filename>
+            <filename>characters/bow_16.png</filename>
+            <filename>characters/bow_17.png</filename>
+            <filename>characters/bow_18.png</filename>
+            <filename>characters/bow_19.png</filename>
+            <filename>characters/bow_20.png</filename>
+            <filename>characters/bow_21.png</filename>
+            <filename>characters/bow_22.png</filename>
+            <filename>characters/bow_23.png</filename>
+            <filename>characters/bow_24.png</filename>
+            <filename>characters/shield_1.png</filename>
+            <filename>characters/shield_2.png</filename>
+            <filename>characters/shield_3.png</filename>
+            <filename>characters/shield_4.png</filename>
+            <filename>characters/shield_5.png</filename>
+            <filename>characters/shield_6.png</filename>
+            <filename>characters/shield_7.png</filename>
+            <filename>characters/shield_8.png</filename>
+            <filename>characters/shield_9.png</filename>
+            <filename>characters/shield_10.png</filename>
+            <filename>characters/shield_11.png</filename>
+            <filename>characters/shield_12.png</filename>
+            <filename>characters/shield_13.png</filename>
+            <filename>characters/shield_14.png</filename>
+            <filename>characters/shield_15.png</filename>
+            <filename>characters/shield_16.png</filename>
+            <filename>characters/shield_17.png</filename>
+            <filename>characters/shield_18.png</filename>
+            <filename>characters/shield_19.png</filename>
+            <filename>characters/shield_20.png</filename>
+            <filename>characters/shield_21.png</filename>
+            <filename>characters/shield_22.png</filename>
+            <filename>characters/shield_23.png</filename>
+            <filename>characters/shield_24.png</filename>
+            <filename>characters/shield_25.png</filename>
+            <filename>characters/shield_26.png</filename>
+            <filename>characters/shield_27.png</filename>
+            <filename>characters/shield_28.png</filename>
+            <filename>characters/shield_29.png</filename>
+            <filename>characters/shield_30.png</filename>
+            <filename>characters/shield_31.png</filename>
+            <filename>characters/shield_32.png</filename>
+            <filename>characters/shield_33.png</filename>
+            <filename>characters/shield_34.png</filename>
+            <filename>characters/shield_35.png</filename>
+            <filename>characters/shield_36.png</filename>
+            <filename>characters/sword_1.png</filename>
+            <filename>characters/sword_2.png</filename>
+            <filename>characters/sword_3.png</filename>
+            <filename>characters/sword_4.png</filename>
+            <filename>characters/sword_5.png</filename>
+            <filename>characters/sword_6.png</filename>
+            <filename>characters/sword_7.png</filename>
+            <filename>characters/sword_8.png</filename>
+            <filename>characters/sword_9.png</filename>
+            <filename>characters/sword_10.png</filename>
+            <filename>characters/sword_11.png</filename>
+            <filename>characters/sword_12.png</filename>
+            <filename>characters/sword_13.png</filename>
+            <filename>characters/sword_14.png</filename>
+            <filename>characters/sword_15.png</filename>
+            <filename>characters/sword_16.png</filename>
+            <filename>characters/sword_17.png</filename>
+            <filename>characters/sword_18.png</filename>
+            <filename>characters/sword_19.png</filename>
+            <filename>characters/sword_20.png</filename>
+            <filename>characters/sword_21.png</filename>
+            <filename>characters/sword_22.png</filename>
+            <filename>characters/sword_23.png</filename>
+            <filename>characters/sword_24.png</filename>
+            <filename>characters/sword_25.png</filename>
+            <filename>characters/sword_26.png</filename>
+            <filename>characters/sword_27.png</filename>
+            <filename>characters/sword_28.png</filename>
+            <filename>characters/sword_29.png</filename>
+            <filename>characters/sword_30.png</filename>
+            <filename>characters/sword_31.png</filename>
+            <filename>characters/sword_32.png</filename>
+            <filename>characters/sword_33.png</filename>
+            <filename>characters/sword_34.png</filename>
+            <filename>characters/sword_35.png</filename>
+            <filename>characters/sword_36.png</filename>
+            <filename>characters/sword_37.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
