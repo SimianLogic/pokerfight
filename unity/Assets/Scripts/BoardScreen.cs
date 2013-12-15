@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public delegate void GameOverEventHandler(Character player);
+
 public class BoardScreen : GameScreen
 {
 	private FContainer playerHand;
@@ -12,7 +14,10 @@ public class BoardScreen : GameScreen
 
 	private Card activeCard;
 
-	public BoardScreen() : base("background|0|0:dealt_card|516|501:deck|364|501:Attack|444|54:Defense|434|423:text_p1_initiative|235|501|000000|Monaco|left|36|88|30:text_p1_attack|235|570|000000|Monaco|left|36|88|30:text_p1_defense|235|645|000000|Monaco|left|36|88|30:text_p1_health|235|716|000000|Monaco|left|36|201|30:player_1|8|518:p1_sword|190|550:p1_shield|186|640:p1_sword_level|4|695:p1_shield_level|86|703:p1_attack_level_label|31|697:p1_defense_level_label|123|697:p1_heart|186|703:p1_initiative|165|492:text_p1_attack_level|33|716|000000|Monaco|left|36|43|30:text_p1_defense_level|123|716|000000|Monaco|left|36|43|30:text_p2_initiative|691|502|000000|Monaco|right|36|88|30:text_p2_attack|691|571|000000|Monaco|right|36|88|30:text_p2_defense|691|646|000000|Monaco|right|36|88|30:text_p2_health|579|716|000000|Monaco|right|36|200|30:player_2|845|518:p2_sword|803|550:p2_shield|799|640:p2_sword_level|843|695:p2_shield_level|923|703:p2_attack_level_label|868|697:p2_defense_level_label|960|697:p2_heart|799|703:p2_initiative|778|492:text_p2_attack_level|869|716|000000|Monaco|left|36|43|30:text_p2_defense_level|959|716|000000|Monaco|left|36|43|30:defense_5|777|264:defense_4|622|264:defense_3|414|264:defense_2|262|264:defense_1|110|264:attack_5|777|54:attack_4|622|54:attack_3|414|110:attack_2|262|54:attack_1|110|54")
+	public Character player;
+	public event GameOverEventHandler onGameOver;
+
+	public BoardScreen() : base("background|0|0:dealt_card|516|484:deck|364|484:btn_surrender_down|399|693:btn_surrender_up|399|693:Attack|446|54:Defense|436|423:progress_1_bg|235|536:progress_1_fill|238|539:progress_2_bg|691|536:progress_2_empty|694|539:text_p1_initiative|235|501|000000|Monaco|left|36|88|30:text_p1_attack|235|570|000000|Monaco|left|36|88|30:text_p1_defense|235|645|000000|Monaco|left|36|88|30:text_p1_health|235|716|000000|Monaco|left|36|88|30:player_1|8|518:p1_sword|190|550:p1_shield|186|640:p1_sword_level|4|695:p1_shield_level|86|703:p1_attack_level_label|31|697:p1_defense_level_label|123|697:p1_heart|186|703:p1_initiative|165|492:text_p1_attack_level|33|716|000000|Monaco|left|36|43|30:text_p1_defense_level|123|716|000000|Monaco|left|36|43|30:text_p2_initiative|691|502|000000|Monaco|right|36|88|30:text_p2_attack|691|571|000000|Monaco|right|36|88|30:text_p2_defense|691|646|000000|Monaco|right|36|88|30:text_p2_health|692|716|000000|Monaco|right|36|87|30:player_2|845|518:p2_sword|803|550:p2_shield|799|640:p2_sword_level|843|695:p2_shield_level|923|703:p2_attack_level_label|868|697:p2_defense_level_label|960|697:p2_heart|799|703:p2_initiative|778|492:text_p2_attack_level|869|716|000000|Monaco|left|36|43|30:text_p2_defense_level|959|716|000000|Monaco|left|36|43|30:defense_5|777|264:defense_4|622|264:defense_3|414|264:defense_2|262|264:defense_1|110|264:attack_5|777|54:attack_4|622|54:attack_3|414|110:attack_2|262|54:attack_1|110|54")
 	{
 
 		//build the deck
@@ -32,18 +37,44 @@ public class BoardScreen : GameScreen
 		background.y = 384;
 		this.AddChildAtIndex (background, 0);
 
+		this.buttons ["surrender"].SignalPress += surrenderHandler;
 
+		player = new Character();
+		this.AddChild (player);
+		
+		//MATIC NUMBER
+		float box_size = 170;
+		player.scale = 2.0f;
+		
+		float padding = (box_size-player.width)/2;
+		
+		player.x = positions ["player_1"].x + padding;
+		player.y = positions ["player_1"].y - padding - player.height;
 	}
-
+	
+	
 	override public void willShow()
 	{
 		//TODO: make sure all our labels are filled with the right values and put in the right place...
+
+		
 	}
 	// Use this for initialization
 	override public void didShow ()
 	{
 		reshuffle ();
+		deck.RemoveAll(item => item == null);
+		
+		Debug.Log ("DECK HAS " + deck.Count + " CARDS");
 		dealAttackCard ();
+	}
+
+	void surrenderHandler(FButton button)
+	{
+		if(onGameOver != null)
+		{
+			onGameOver(player);
+		}
 	}
 
 	private TweenConfig dealAttackConfig;
@@ -65,14 +96,13 @@ public class BoardScreen : GameScreen
 		if(dealAttackConfig == null)
 		{
 			dealAttackConfig = new TweenConfig ()
-				.setDelay (1.0f)
-					.floatProp ("rotation", 90.0f)
-					.floatProp("x", positions ["attack_3"].x + first_attack.height / 2)
-					.floatProp("y", positions ["attack_3"].y - first_attack.width / 2)
-					.setEaseType(EaseType.BackOut)
-					.onComplete(thisTween => {
-						dealDefenseCard();
-					});
+				.floatProp ("rotation", 90.0f)
+				.floatProp("x", positions ["attack_3"].x + first_attack.height / 2)
+				.floatProp("y", positions ["attack_3"].y - first_attack.width / 2)
+				.setEaseType(EaseType.BackOut)
+				.onComplete(thisTween => {
+					dealDefenseCard();
+				});
 		}
 		
 		Go.to (first_attack, 0.5f,dealAttackConfig);
@@ -118,6 +148,7 @@ public class BoardScreen : GameScreen
 		deck.RemoveAt(0);
 		
 		Futile.stage.AddChild (activeCard);
+		activeCard.rotation = 0;
 		activeCard.x = positions ["deck"].x + activeCard.width/2;
 		activeCard.y = positions ["deck"].y - activeCard.height/2;
 		activeCard.show ();
@@ -150,6 +181,11 @@ public class BoardScreen : GameScreen
 				deck.Add(card);
 			}
 		}
+
+		if(activeCard != null)
+		{
+			deck.Add (activeCard);
+		}
 		
 		attack = new Card[5];
 		defense = new Card[5];
@@ -173,6 +209,7 @@ public class BoardScreen : GameScreen
 				{
 					attack[i] = activeCard;
 					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["attack_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+					activeCard = null;
 					if(deck.Count > 42)
 					{
 						dealCard();
@@ -191,6 +228,7 @@ public class BoardScreen : GameScreen
 				{
 					defense[i] = activeCard;
 					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x + activeCard.width/2).floatProp("y",positions ["defense_" + (i+1)].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+					activeCard = null;
 					if(deck.Count > 42)
 					{
 						Debug.Log ("DECK HAS " + deck.Count);

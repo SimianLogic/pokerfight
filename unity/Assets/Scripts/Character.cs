@@ -19,6 +19,13 @@ public class Character : MetaContainer
 	public FSprite pants;
 	public FSprite shoes;
 
+	public int faceId;
+	public int headId;
+	public int hatId;
+	public int shirtId;
+	public int pantsId;
+	public int shoesId;
+
 	public Character(int face_id=1, int head_id=0, int hat_id=-1, int torso_id=0, int legs_id=0, int feet_id=0) : base()
 	{
 		this.metadata = "face_1|27|12:head_1|22|5:head_2|22|5:head_3|22|5:head_4|22|5:head_5|22|5:head_6|22|5:head_7|22|5:head_8|22|5:head_9|22|5:head_10|22|5:head_11|22|5:head_12|22|5:torso_1|7|30:torso_2|7|30:torso_3|7|30:torso_4|7|30:torso_5|7|30:torso_6|7|30:torso_7|7|30:torso_8|7|30:legs_1|25|47:legs_2|25|47:legs_3|25|47:legs_4|25|47:legs_5|25|47:legs_6|25|47:legs_7|25|47:legs_8|25|47:hat_1|24|8:hat_2|24|8:hat_3|24|8:hat_4|24|8:hat_5|24|8:hat_6|24|8:hat_7|24|8:hat_8|20|1:hat_9|20|1:hat_10|20|1:hat_11|20|1:hat_12|20|1:hat_13|20|1:hat_14|20|1:hat_15|20|1:hat_16|24|8:hat_17|22|0:hat_18|20|0:hat_19|20|0:hat_20|20|0:hat_21|20|0:hat_22|20|0:hat_23|20|0:hat_24|20|0:hat_25|20|0:feet_1|20|57:feet_2|20|57:feet_3|20|57:feet_4|20|57:feet_5|20|57:feet_6|20|57:feet_7|20|57:feet_8|20|57:feet_9|25|57";
@@ -32,6 +39,22 @@ public class Character : MetaContainer
 		setShirt (torso_id);
 		setPants (legs_id);
 		setShoes (feet_id);
+	}
+
+	public Character clone()
+	{
+		return new Character (faceId, headId, hatId, shirtId, pantsId, shoesId);
+	}
+
+	public void mimic(Character target)
+	{
+		setHead (target.headId);
+		setHat (target.hatId);
+		setFace (target.faceId);
+		
+		setShirt (target.shirtId);
+		setPants (target.pantsId);
+		setShoes (target.shoesId);
 	}
 
 	public float height{
@@ -58,6 +81,8 @@ public class Character : MetaContainer
 			return;
 		}
 
+		faceId = id;
+
 		if (face == null) 
 		{
 			face = new FSprite("face_" + id);
@@ -79,8 +104,9 @@ public class Character : MetaContainer
 			setHead (RXRandom.Range(1,NUM_HEADS));
 			return;
 		}
+		
+		headId = id;
 
-		Debug.Log ("HEAD " + id);
 		if (head == null) 
 		{
 			head = new FSprite("head_" + id);
@@ -104,6 +130,8 @@ public class Character : MetaContainer
 			return;
 		}
 
+		hatId = id;
+
 		if(id == 0)
 		{
 			if(hat == null)
@@ -116,7 +144,6 @@ public class Character : MetaContainer
 			}
 		}
 
-		Debug.Log ("HAT " + id);
 		if (hat == null) 
 		{
 			hat = new FSprite("hat_" + id);
@@ -140,7 +167,8 @@ public class Character : MetaContainer
 			return;
 		}
 
-		Debug.Log ("SHIRT " + id);
+		shirtId = id;
+
 		if (shirt == null) 
 		{
 			shirt = new FSprite("torso_" + id);
@@ -162,7 +190,8 @@ public class Character : MetaContainer
 			return;
 		}
 
-		Debug.Log ("PANTS " + id);
+		pantsId = id;
+
 		if (pants == null) 
 		{
 			pants = new FSprite("legs_" + id);
@@ -176,6 +205,7 @@ public class Character : MetaContainer
 			pants.element = am.GetElementWithName ("legs_" + id);
 		}
 	}
+
 	public void setShoes(int id)
 	{
 		if (id == 0) 
@@ -184,7 +214,8 @@ public class Character : MetaContainer
 			return;
 		}
 
-		Debug.Log ("SHOES " + id);
+		shoesId = id;
+
 		if (shoes == null) 
 		{
 			shoes = new FSprite("feet_" + id);

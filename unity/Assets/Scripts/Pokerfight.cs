@@ -36,12 +36,21 @@ public class Pokerfight : MonoBehaviour
 		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -18.0f);
 
 		board = new BoardScreen ();
-//		loadScreen (board);
+		board.onGameOver += handleGameOver;
 
 		menu = new MenuScreen ();
+		menu.startHandler += onMenuStart;
 		loadScreen (menu);
+	}
 
+	public void handleGameOver(Character player)
+	{
+		//TODO: cache our best heroes for later...
+		//TODO: move us to game over screen...
 
+		//come back to the menu: new character!
+		menu.player.randomize();
+		loadScreen (menu);
 	}
 
 	//adapted a bit from the Banana demo in Futile
@@ -57,7 +66,21 @@ public class Pokerfight : MonoBehaviour
 			return;
 		}
 
+		if (direction == ScreenSourceDirection.Instant) 
+		{
+			Futile.stage.RemoveChild (currentScreen);
+			screen.willShow();
+			currentScreen = screen;
+			Futile.stage.AddChild(screen);
+			screen.didShow();
+			return;
+		}
+	}
 
+	public void onMenuStart(Character player)
+	{
+		board.player.mimic (player);
+		loadScreen (board, ScreenSourceDirection.Instant);
 	}
 	
 	// Update is called once per frame
