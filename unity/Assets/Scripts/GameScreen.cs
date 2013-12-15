@@ -8,6 +8,7 @@ public class GameScreen : FContainer
 	public string metadata;
 	public Dictionary<string, Vector2> positions;
 	public Dictionary<string, FLabel> labels;
+	public Dictionary<string, FButton> buttons;
 	
 	public GameScreen(string metadata)
 	{	
@@ -28,11 +29,25 @@ public class GameScreen : FContainer
 			
 			int x = System.Int32.Parse(data[1]);
 			int y = 768 - System.Int32.Parse(data[2]);
-			
-			if(type == "text")
-			{
+
+
+			if(type == "btn"){
+				if(data[0].IndexOf("_down") >= 0)
+				{
+					//no need to process a button twice!
+					continue;
+				}
+
+				string button_name = data[0].Replace ("btn_","").Replace("_up","");
+				FButton button = new FButton(data[0], "btn_" + button_name + "_down");
+
+				this.AddChild(button);
+				button.x = x + button.sprite.width/2;
+				button.y = y - button.sprite.height/2;
+
+				positions[button_name] = new Vector2(x,y);
+			}else if(type == "text"){
 				FLabel label = new FLabel("monaco","00");
-				Debug.Log ("Intializing label " + data[0].Substring (5));
 				this.AddChild(label);
 				
 				int label_width = System.Int32.Parse(data[7]);

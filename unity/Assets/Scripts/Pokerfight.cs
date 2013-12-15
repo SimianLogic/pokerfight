@@ -15,7 +15,11 @@ public class Pokerfight : MonoBehaviour
 {
 
 	private GameScreen currentScreen;
+
+	//screens
 	private BoardScreen board;
+	private MenuScreen menu;
+
 	void Start () {
 		//init
 		FutileParams fparams = new FutileParams (true, true, true, true);
@@ -32,7 +36,10 @@ public class Pokerfight : MonoBehaviour
 		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -18.0f);
 
 		board = new BoardScreen ();
-		loadScreen (board);
+//		loadScreen (board);
+
+		menu = new MenuScreen ();
+		loadScreen (menu);
 	}
 
 	//adapted a bit from the Banana demo in Futile
