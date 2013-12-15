@@ -1,19 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class MenuScreen : MonoBehaviour
+public class MenuScreen : GameScreen
 {
+	public MenuScreen() : base("")
+	{
 
-		// Use this for initialization
-		void Start ()
-		{
-	
-		}
-	
-		// Update is called once per frame
-		void Update ()
-		{
-	
-		}
+	}
+
+	override public void willShow()
+	{
+		
+	}
+
+	// Use this for initialization
+	override public void didShow ()
+	{
+
+	}
 }
 
