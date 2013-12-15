@@ -93,8 +93,10 @@
      <Compile Include="Assets\Futile\ThirdParty\MiniJson.cs" />
      <Compile Include="Assets\Scripts\BoardScreen.cs" />
      <Compile Include="Assets\Scripts\Card.cs" />
+     <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\GameScreen.cs" />
      <Compile Include="Assets\Scripts\MenuScreen.cs" />
+     <Compile Include="Assets\Scripts\MetaContainer.cs" />
      <Compile Include="Assets\Scripts\Pokerfight.cs" />
      <None Include="Assets\Resources\board_layout.txt" />
      <None Include="Assets\Futile\Resources\Shaders\AdditiveColor.shader" />

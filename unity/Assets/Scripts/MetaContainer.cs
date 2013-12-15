@@ -9,14 +9,20 @@ public class MetaContainer : FContainer
 	public Dictionary<string, Vector2> positions;
 	public Dictionary<string, FLabel> labels;
 	public Dictionary<string, FButton> buttons;
-	
+
+	public MetaContainer() : base()
+	{
+		//the subclass constructor will provide the metadata and call processMetadata...
+		//this is a kludgy way to let the Character set maxHeight to 64 instead of 768
+	}
+
 	public MetaContainer(string metadata)
 	{	
 		this.metadata = metadata;
-		processMetadata ();
+		processMetadata (768);
 	}
 
-	void processMetadata()
+	internal void processMetadata(int maxHeight)
 	{
 		positions = new Dictionary<string,Vector2> ();
 		labels = new Dictionary<string, FLabel> ();
@@ -30,7 +36,7 @@ public class MetaContainer : FContainer
 			string type = data[0].Split("_"[0])[0];
 			
 			int x = System.Int32.Parse(data[1]);
-			int y = 768 - System.Int32.Parse(data[2]);
+			int y = maxHeight - System.Int32.Parse(data[2]);
 
 
 			if(type == "btn"){

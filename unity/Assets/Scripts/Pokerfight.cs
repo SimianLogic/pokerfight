@@ -40,6 +40,8 @@ public class Pokerfight : MonoBehaviour
 
 		menu = new MenuScreen ();
 		loadScreen (menu);
+
+
 	}
 
 	//adapted a bit from the Banana demo in Futile
