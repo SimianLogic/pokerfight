@@ -173,7 +173,6 @@
             <filename>main_menu/btn_randomize_up.png</filename>
             <filename>main_menu/btn_start_down.png</filename>
             <filename>main_menu/btn_start_up.png</filename>
-            <filename>characters/face.png</filename>
             <filename>characters/feet_1.png</filename>
             <filename>characters/feet_2.png</filename>
             <filename>characters/feet_3.png</filename>
@@ -206,8 +205,6 @@
             <filename>characters/hat_23.png</filename>
             <filename>characters/hat_24.png</filename>
             <filename>characters/hat_25.png</filename>
-            <filename>characters/hat_26.png</filename>
-            <filename>characters/hat_27.png</filename>
             <filename>characters/head_1.png</filename>
             <filename>characters/head_2.png</filename>
             <filename>characters/head_3.png</filename>
@@ -236,6 +233,29 @@
             <filename>characters/torso_6.png</filename>
             <filename>characters/torso_7.png</filename>
             <filename>characters/torso_8.png</filename>
+            <filename>characters/face_1.png</filename>
+            <filename>characters/hat_17.png</filename>
+            <filename>characters/hat_18.png</filename>
+            <filename>board_layout/btn_surrender_down.png</filename>
+            <filename>board_layout/btn_surrender_up.png</filename>
+            <filename>board_layout/progress_1_bg.png</filename>
+            <filename>board_layout/progress_1_fill.png</filename>
+            <filename>battle_screen.png</filename>
+            <filename>modal.png</filename>
+            <filename>battle_screen/btn_continue_down.png</filename>
+            <filename>battle_screen/btn_continue_up.png</filename>
+            <filename>battle_screen/Flush.png</filename>
+            <filename>battle_screen/Four_of_a_Kind.png</filename>
+            <filename>battle_screen/Full_House.png</filename>
+            <filename>battle_screen/JUNK.png</filename>
+            <filename>battle_screen/One_Pair.png</filename>
+            <filename>battle_screen/Royal_Flush.png</filename>
+            <filename>battle_screen/Straight_Flush.png</filename>
+            <filename>battle_screen/Straight.png</filename>
+            <filename>battle_screen/Three_of_a_Kind.png</filename>
+            <filename>battle_screen/Two_Pair.png</filename>
+            <filename>battle_screen/p1_slash.png</filename>
+            <filename>battle_screen/p2_slash.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
