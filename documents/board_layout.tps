@@ -168,6 +168,74 @@
         <array>
             <filename>monaco_36.png</filename>
             <filename>board_layout.png</filename>
+            <filename>main_menu.png</filename>
+            <filename>main_menu/btn_randomize_down.png</filename>
+            <filename>main_menu/btn_randomize_up.png</filename>
+            <filename>main_menu/btn_start_down.png</filename>
+            <filename>main_menu/btn_start_up.png</filename>
+            <filename>characters/face.png</filename>
+            <filename>characters/feet_1.png</filename>
+            <filename>characters/feet_2.png</filename>
+            <filename>characters/feet_3.png</filename>
+            <filename>characters/feet_4.png</filename>
+            <filename>characters/feet_5.png</filename>
+            <filename>characters/feet_6.png</filename>
+            <filename>characters/feet_7.png</filename>
+            <filename>characters/feet_8.png</filename>
+            <filename>characters/feet_9.png</filename>
+            <filename>characters/hat_1.png</filename>
+            <filename>characters/hat_2.png</filename>
+            <filename>characters/hat_3.png</filename>
+            <filename>characters/hat_4.png</filename>
+            <filename>characters/hat_5.png</filename>
+            <filename>characters/hat_6.png</filename>
+            <filename>characters/hat_7.png</filename>
+            <filename>characters/hat_8.png</filename>
+            <filename>characters/hat_9.png</filename>
+            <filename>characters/hat_10.png</filename>
+            <filename>characters/hat_11.png</filename>
+            <filename>characters/hat_12.png</filename>
+            <filename>characters/hat_13.png</filename>
+            <filename>characters/hat_14.png</filename>
+            <filename>characters/hat_15.png</filename>
+            <filename>characters/hat_16.png</filename>
+            <filename>characters/hat_19.png</filename>
+            <filename>characters/hat_20.png</filename>
+            <filename>characters/hat_21.png</filename>
+            <filename>characters/hat_22.png</filename>
+            <filename>characters/hat_23.png</filename>
+            <filename>characters/hat_24.png</filename>
+            <filename>characters/hat_25.png</filename>
+            <filename>characters/hat_26.png</filename>
+            <filename>characters/hat_27.png</filename>
+            <filename>characters/head_1.png</filename>
+            <filename>characters/head_2.png</filename>
+            <filename>characters/head_3.png</filename>
+            <filename>characters/head_4.png</filename>
+            <filename>characters/head_5.png</filename>
+            <filename>characters/head_6.png</filename>
+            <filename>characters/head_7.png</filename>
+            <filename>characters/head_8.png</filename>
+            <filename>characters/head_9.png</filename>
+            <filename>characters/head_10.png</filename>
+            <filename>characters/head_11.png</filename>
+            <filename>characters/head_12.png</filename>
+            <filename>characters/legs_1.png</filename>
+            <filename>characters/legs_2.png</filename>
+            <filename>characters/legs_3.png</filename>
+            <filename>characters/legs_4.png</filename>
+            <filename>characters/legs_5.png</filename>
+            <filename>characters/legs_6.png</filename>
+            <filename>characters/legs_7.png</filename>
+            <filename>characters/legs_8.png</filename>
+            <filename>characters/torso_1.png</filename>
+            <filename>characters/torso_2.png</filename>
+            <filename>characters/torso_3.png</filename>
+            <filename>characters/torso_4.png</filename>
+            <filename>characters/torso_5.png</filename>
+            <filename>characters/torso_6.png</filename>
+            <filename>characters/torso_7.png</filename>
+            <filename>characters/torso_8.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
