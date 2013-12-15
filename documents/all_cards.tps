@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>unity</string>
         <key>textureFileName</key>
-        <filename>../hello_futile/test/Assets/Resources/all_cards.png</filename>
+        <filename>../unity/Assets/Resources/all_cards.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -127,7 +127,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../hello_futile/test/Assets/Resources/all_cards.txt</filename>
+                <filename>../unity/Assets/Resources/all_cards.txt</filename>
             </struct>
         </map>
         <key>multiPack</key>
