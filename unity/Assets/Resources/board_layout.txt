@@ -2,6 +2,46 @@
 
 "board_layout.png":
 {
+	"frame": {"x":2,"y":772,"w":1024,"h":768},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1024,"h":768},
+	"sourceSize": {"w":1024,"h":768}
+},
+"btn_randomize_down.png":
+{
+	"frame": {"x":277,"y":1794,"w":155,"h":62},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":155,"h":62},
+	"sourceSize": {"w":155,"h":62}
+},
+"btn_randomize_up.png":
+{
+	"frame": {"x":277,"y":1730,"w":155,"h":62},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":155,"h":62},
+	"sourceSize": {"w":155,"h":62}
+},
+"btn_start_down.png":
+{
+	"frame": {"x":2,"y":1880,"w":273,"h":148},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":148},
+	"sourceSize": {"w":273,"h":148}
+},
+"btn_start_up.png":
+{
+	"frame": {"x":2,"y":1730,"w":273,"h":148},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":273,"h":148},
+	"sourceSize": {"w":273,"h":148}
+},
+"main_menu.png":
+{
 	"frame": {"x":2,"y":2,"w":1024,"h":768},
 	"rotated": false,
 	"trimmed": false,
@@ -10,7 +50,7 @@
 },
 "monaco_36.png":
 {
-	"frame": {"x":2,"y":772,"w":498,"h":186},
+	"frame": {"x":2,"y":1542,"w":498,"h":186},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":2,"w":498,"h":186},
@@ -21,8 +61,8 @@
 	"version": "1.0",
 	"image": "board_layout.png",
 	"format": "RGBA8888",
-	"size": {"w":2048,"h":1024},
+	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f0ce67a32d4711430193e6920d3cf0d4:cd12c3591d74ce8b0e1e545f64bc3c64:d08447b64ecfb342cd68c1accbe69edd$"
+	"smartupdate": "$TexturePacker:SmartUpdate:bca372f2bfc5cdbc1ff4c371f47c9657:c6e438a17e79dfb45aa6361af8c6c0fd:d08447b64ecfb342cd68c1accbe69edd$"
 }
 }
