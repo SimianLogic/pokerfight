@@ -18,6 +18,8 @@ public class MenuScreen : GameScreen
 		this.buttons ["start"].SignalPress += startButtonHandler;
 
 		player = new Character ();
+		player.setShield (1);
+		player.setSword (1);
 		this.AddChild (player);
 
 
@@ -32,7 +34,7 @@ public class MenuScreen : GameScreen
 
 	public void randomizeHandler(FButton button)
 	{
-		player.randomize ();
+		player.randomizeLook ();
 	}
 
 	public void startButtonHandler(FButton button)

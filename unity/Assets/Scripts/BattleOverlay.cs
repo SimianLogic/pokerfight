@@ -2,9 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public delegate void ContinueHandler();
+
 public class BattleOverlay : GameScreen
 {
-
+	public event ContinueHandler onContinue;
+	
 	public Character player;
 	public Character enemy;
 	
@@ -15,7 +18,7 @@ public class BattleOverlay : GameScreen
 	
 	public FSprite modal;
 	public FLabel healthFlashy;
-	public BattleOverlay():base("modal|0|0:popup_bg|113|87:VS|452|237:p1_sword|193|436:p1_attack_level_label|132|440:p1_shield|189|533:p1_defense_level_label|132|535:player_1|132|103:p1_defense_progress_bg|234|532:p1_attack_progress_bg_copy|234|446:p1_heart|134|379:p2_sword|698|436:p2_attack_level_label|637|440:p2_shield|834|440:p2_defense_level_label|777|442:player_2|605|103:p2_heart|607|379:p1_defense_progress_fill|239|537:p1_attack_progress_fill|239|451:p1_health_progress_fill|171|383:p2_health_progress_fill|644|383:text_p1_attack_level|130|468|000000|Monaco|center|36|43|30:text_p1_defense_level|131|559|000000|Monaco|center|36|43|30:btn_continue_down|629|512:btn_continue_up|629|512:text_p2_attack_level|635|468|000000|Monaco|center|36|43|30:text_p2_defense_level|776|466|000000|Monaco|center|36|43|30:p1_slash|286|181:p2_slash|616|181:attack_anchor|512|164:defense_anchor|513|349:JUNK|403|143:One_Pair|348|142:Two_Pair|340|143:Three_of_a_Kind|207|142:Straight|357|142:Flush|414|143:Full_House|308|143:Four_of_a_Kind|238|142:Straight_Flush|235|142:Royal_Flush|288|143")
+	public BattleOverlay():base("modal|0|0:popup_bg|113|87:VS|452|237:p1_sword|193|436:p1_attack_level_label|132|440:p1_shield|189|533:p1_defense_level_label|132|535:player_1|132|103:p1_defense_progress_bg|234|532:p1_attack_progress_bg_copy|234|446:p1_heart|134|379:p2_sword|698|436:p2_attack_level_label|637|440:p2_shield|834|440:p2_defense_level_label|777|442:player_2|605|103:p2_heart|607|379:p1_defense_progress_fill|239|537:p1_attack_progress_fill|239|451:p1_health_progress_fill|171|383:p2_health_progress_fill|644|383:text_p1_attack_level|130|468|000000|Monaco|center|36|43|30:text_p1_defense_level|131|559|000000|Monaco|center|36|43|30:btn_continue_down|629|512:btn_continue_up|629|512:text_p2_attack_level|635|468|000000|Monaco|center|36|43|30:text_p2_defense_level|776|466|000000|Monaco|center|36|43|30:p1_slash|262|181:p2_slash|616|181:attack_anchor|512|164:defense_anchor|513|349:JUNK|403|143:One_Pair|348|142:Two_Pair|340|143:Three_of_a_Kind|207|142:Straight|357|142:Flush|414|143:Full_House|308|143:Four_of_a_Kind|238|142:Straight_Flush|235|142:Royal_Flush|288|143")
 	{
 		FSprite bg = new FSprite("battle_screen");
 		this.AddChildAtIndex(bg, 0);
@@ -84,8 +87,19 @@ public class BattleOverlay : GameScreen
 		enemySlash = new FSprite("p2_slash");
 		enemySlash.anchorX = 0.0f;
 		enemySlash.anchorY = 1.0f;
+		
+		refresh();
 	}
 	
+	public void refresh()
+	{
+		setText ("p2_defense_level", enemy.defenseLevel + "");
+		setText ("p2_attack_level", enemy.attackLevel + "");
+		setText ("p1_defense_level", player.defenseLevel + "");
+		setText ("p1_attack_level",player.attackLevel + "");
+		
+		//TODO: update health progress
+	}
 	
 	private Character attacker;
 	public void playSequence(Character attacker, Character defender, PokerHand attacker_hand, PokerHand defender_hand)
@@ -97,14 +111,19 @@ public class BattleOverlay : GameScreen
 	
 	public void continueHandler(FButton button)
 	{
-		PokerHand top = Card.randomHand();
-		PokerHand bot = Card.randomHand();
-		if(RXRandom.Float() > 0.5)
+		if(onContinue != null)
 		{
-			playSequence(player, enemy, top, bot);
-		}else{
-			playSequence(enemy, player, top, bot);
+			onContinue();
 		}
+		
+//		PokerHand top = Card.randomHand();
+//		PokerHand bot = Card.randomHand();
+//		if(RXRandom.Float() > 0.5)
+//		{
+//			playSequence(player, enemy, top, bot);
+//		}else{
+//			playSequence(enemy, player, top, bot);
+//		}
 	}
 	
 	public void showSlash()
@@ -131,6 +150,7 @@ public class BattleOverlay : GameScreen
 			.floatProp ("scale",1.5f)
 			.onComplete (thisTween => {
 				this.RemoveChild(playerSlash);
+				showDamage();
 			})
 		);
 	}
@@ -148,8 +168,14 @@ public class BattleOverlay : GameScreen
 			.floatProp ("scale",1.5f)
 			.onComplete (thisTween => {
 				this.RemoveChild (enemySlash);
+				showDamage();
 			})
 		);
+	}
+	
+	public void showDamage()
+	{
+		
 	}
 	
 	public void showHands(PokerHand top, PokerHand bot)

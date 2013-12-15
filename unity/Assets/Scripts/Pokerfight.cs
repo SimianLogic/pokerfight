@@ -20,6 +20,8 @@ public class Pokerfight : MonoBehaviour
 	private BoardScreen board;
 	private MenuScreen menu;
 	private BattleOverlay battle;
+	
+	private bool hasBattle; //are we showing the battle alert?
 
 	void Start () {
 		//init
@@ -42,10 +44,9 @@ public class Pokerfight : MonoBehaviour
 		menu = new MenuScreen ();
 		menu.startHandler += onMenuStart;
 		loadScreen (menu);
-		
+	
 		battle = new BattleOverlay();
-		Futile.stage.AddChild(battle);
-		currentScreen = battle;
+		battle.onContinue += onBattleContinue;
 	}
 
 	public void handleGameOver(Character player)
@@ -54,7 +55,12 @@ public class Pokerfight : MonoBehaviour
 		//TODO: move us to game over screen...
 
 		//come back to the menu: new character!
+		battle.RemoveFromContainer();
+		hasBattle = false;
+		
 		menu.player.randomize();
+		menu.player.setSword (1);
+		menu.player.setShield (1);
 		loadScreen (menu);
 	}
 
@@ -84,10 +90,24 @@ public class Pokerfight : MonoBehaviour
 
 	public void onMenuStart(Character player)
 	{
-		if(currentScreen != menu) return;
+		if(hasBattle) return;
 		
-		board.player.mimic (player);
-		loadScreen (board, ScreenSourceDirection.Instant);
+		menu.AddChild(battle);
+		hasBattle = true;
+		
+		battle.player.mimic (menu.player);
+		battle.enemy.randomize();
+	}
+	
+	public void onBattleContinue()
+	{
+		if(currentScreen == menu)
+		{
+			board.player.mimic (menu.player);
+			board.enemy.mimic (battle.enemy);
+			
+			loadScreen (board, ScreenSourceDirection.Instant);			
+		}
 	}
 	
 	// Update is called once per frame
