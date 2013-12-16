@@ -50,8 +50,7 @@ public class Pokerfight : MonoBehaviour
 		recap = new RecapScreen();
 		recap.onContinue += onRecapContinue;
 		
-		recap.showLose ();
-		loadScreen (recap);
+		loadScreen(menu);
 	}
 	
 	//adapted a bit from the Banana demo in Futile
@@ -158,7 +157,10 @@ public class Pokerfight : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(currentScreen == board)
+		{
+			board.update();
+		}
 	}
 
 }

@@ -35,7 +35,13 @@ public class Character : MetaContainer
 	public int swordId;
 	public int shieldId;
 	
+	public int maxHealth;
 	public int health;
+	
+	public int attack;
+	public int defense;
+	public int initiative;
+	
 	public int coins;
 	public int attackLevel;
 	public int defenseLevel;
@@ -47,6 +53,14 @@ public class Character : MetaContainer
 		this.metadata = "face_1|27|12:head_1|22|5:head_2|22|5:head_3|22|5:head_4|22|5:head_5|22|5:head_6|22|5:head_7|22|5:head_8|22|5:head_9|22|5:head_10|22|5:head_11|22|5:head_12|22|5:torso_1|7|30:torso_2|7|30:torso_3|7|30:torso_4|7|30:torso_5|7|30:torso_6|7|30:torso_7|7|30:torso_8|7|30:legs_1|25|47:legs_2|25|47:legs_3|25|47:legs_4|25|47:legs_5|25|47:legs_6|25|47:legs_7|25|47:legs_8|25|47:hat_1|24|8:hat_2|24|8:hat_3|24|8:hat_4|24|8:hat_5|24|8:hat_6|24|8:hat_7|24|8:hat_8|20|1:hat_9|20|1:hat_10|20|1:hat_11|20|1:hat_12|20|1:hat_13|20|1:hat_14|20|1:hat_15|20|1:hat_16|24|8:hat_17|22|0:hat_18|20|0:hat_19|20|0:hat_20|20|0:hat_21|20|0:hat_22|20|0:hat_23|20|0:hat_24|20|0:hat_25|20|0:feet_1|20|57:feet_2|20|57:feet_3|20|57:feet_4|20|57:feet_5|20|57:feet_6|20|57:feet_7|20|57:feet_8|20|57:feet_9|25|57:sword_1|5|19:sword_2|5|19:sword_3|5|19:sword_4|5|19:sword_5|5|19:sword_6|5|19:sword_7|5|19:sword_8|5|19:sword_9|5|19:sword_10|5|19:sword_11|5|19:sword_12|5|19:sword_13|5|19:sword_14|5|13:sword_15|5|4:sword_16|5|13:sword_17|5|4:sword_18|5|13:sword_19|5|4:sword_20|5|13:sword_21|5|4:sword_22|5|13:sword_23|5|4:sword_24|5|13:sword_25|5|4:sword_26|5|13:sword_27|5|4:sword_28|5|13:sword_29|5|4:sword_30|5|13:sword_31|5|4:sword_32|5|13:sword_33|5|4:sword_34|5|13:sword_35|5|4:sword_36|5|13:sword_37|5|4:shield_1|47|36:shield_2|43|35:shield_3|41|30:shield_4|47|36:shield_5|43|35:shield_6|41|30:shield_7|47|36:shield_8|43|35:shield_9|41|30:shield_10|47|36:shield_11|43|35:shield_12|41|30:shield_13|47|36:shield_14|43|35:shield_15|41|30:shield_16|47|36:shield_17|43|35:shield_18|41|30:shield_19|47|36:shield_20|43|35:shield_21|41|30:shield_22|47|36:shield_23|43|35:shield_24|41|30:shield_25|47|36:shield_26|43|35:shield_27|41|30:shield_28|47|36:shield_29|43|35:shield_30|41|30:shield_31|47|36:shield_32|43|35:shield_33|41|30:shield_34|47|36:shield_35|43|35:shield_36|41|30:bow_1|9|29:bow_2|9|26:bow_3|9|19:bow_4|9|29:bow_5|9|26:bow_6|9|19:bow_7|9|29:bow_8|9|26:bow_9|9|19:bow_10|9|29:bow_11|9|26:bow_12|9|19:bow_13|9|29:bow_14|9|26:bow_15|9|19:bow_16|9|29:bow_17|9|26:bow_18|9|19:bow_19|9|29:bow_20|9|26:bow_21|9|19:bow_22|9|29:bow_23|9|26:bow_24|9|19";
 		processMetadata (SIZE);
 		
+		health = 100;
+		maxHealth = 100;
+		
+		attack = 10;
+		defense = 5;
+		initiative = 40;
+		
+		coins = 0;
 		attackLevel = 1;
 		defenseLevel = 1;
 		attackStance = PokerHand.Junk;
@@ -99,8 +113,14 @@ public class Character : MetaContainer
 		setSword(target.swordId);
 		setShield(target.shieldId);
 		
+		maxHealth = target.maxHealth;
 		health = target.health;
 		coins = target.coins;
+		
+		attack = target.attack;
+		defense = target.defense;
+		initiative = target.initiative;
+		
 		attackLevel = target.attackLevel;
 		defenseLevel = target.defenseLevel;
 		attackStance = target.attackStance;

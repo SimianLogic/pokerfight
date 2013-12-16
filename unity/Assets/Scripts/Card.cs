@@ -130,6 +130,54 @@ public class Card : FSprite, FSingleTouchableInterface
 		
 		return "JUNK";
 	}
+	
+	//haven't had time to do the combinatorics on what the odds of
+	//each hand are in this format (draft, see 10 cards). for now
+	//just using regular poker odds / 2 (i.e. 2X as easy)
+	public static PokerHand weightedRandomHand()
+	{
+		//Royal Flush = 650,000/2 = 325,000
+		//Straight Flush = 65,000/2 = 32,500
+		//Four of a Kind = 4,000/2 = 2,000
+		//Full House = 700/2 = 350
+		//Flush = 500/2 = 250
+		//Straight = 250/2 = 125
+		//Three of a Kind = 50/2 = 25
+		//Two Pairs = 20/2 = 10
+		
+		//split the rest between pair and junk
+		
+		float roll = RXRandom.Float ();
+		float[] checks = {1.0f / 325000.0f,  
+						1.0f / 32500.0f, 
+						1.0f / 2000.0f, 
+						1.0f / 350.0f,
+						1.0f / 250.0f,
+						1.0f / 125.0f,
+						1.0f / 25.0f,
+						1.0f / 10.0f
+			};
+		
+		PokerHand[] hands = {PokerHand.RoyalFlush,PokerHand.StraightFlush,PokerHand.FourOfAKind,PokerHand.FullHouse,PokerHand.Flush,PokerHand.Straight,PokerHand.ThreeOfAKind,PokerHand.TwoPair};
+						
+		float total = 0.0f;
+		for(int i = 0; i < checks.Length; i++)
+		{
+			total += checks[i];
+			if(roll < total)
+			{
+				return hands[i];
+			}
+		}
+		
+		if(RXRandom.Float () > 0.5f)
+		{
+			return PokerHand.OnePair;
+		}else{
+			return PokerHand.Junk;
+		}
+	}
+	
 	public static PokerHand randomHand()
 	{
 		return (PokerHand)RXRandom.Range((int)PokerHand.Junk, (int)PokerHand.RoyalFlush + 1);

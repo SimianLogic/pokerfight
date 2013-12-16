@@ -5,8 +5,20 @@ using System.Collections.Generic;
 public delegate void GameOverEventHandler();
 public delegate void CombatHandler(Character attacker);
 
+public enum BoardState
+{
+	Initiative,
+	PlayerTurn,
+	EnemyTurn,
+	Cooldown
+}
+
 public class BoardScreen : GameScreen
 {
+	public BoardState state;
+	public float cooldownTimer;
+	public float cooldownTimeLimit = 0;  //no cooldown first go-round
+
 	private FContainer playerHand;
 	private List<Card> deck;
 	
@@ -18,12 +30,17 @@ public class BoardScreen : GameScreen
 	public Character player;
 	public Character enemy;
 	
+	public float playerInitiative;
+	public float enemyInitiative;
+	public float initiativeRate = 100.0f; //how long if our sepeed where 100? players will be much less
+	
 	public event GameOverEventHandler onGameOver;
 	public event CombatHandler onCombat;
 
 	public BoardScreen() : base("background|0|0:dealt_card|516|484:deck|364|484:Attack|446|54:Defense|436|423:player_1|8|518:p1_sword|190|550:p1_shield|186|640:p1_sword_level|4|695:p1_shield_level|86|703:p1_attack_level_label|31|697:p1_defense_level_label|123|697:p1_heart|186|703:p1_initiative_icon|165|492:player_2|845|518:p2_sword|803|550:p2_shield|799|640:p2_sword_level|843|695:p2_shield_level|923|703:p2_attack_level_label|868|697:p2_defense_level_label|960|697:p2_heart|799|703:p2_initiative_icon|778|492:defense_5|777|264:defense_4|622|264:defense_3|414|264:defense_2|262|264:defense_1|110|264:attack_5|777|54:attack_4|622|54:attack_3|414|110:attack_2|262|54:attack_1|110|54:text_p2_initiative|691|502|000000|Monaco|right|36|88|30:text_p2_attack|691|571|000000|Monaco|right|36|88|30:text_p2_defense|691|646|000000|Monaco|right|36|88|30:text_p2_health|692|716|000000|Monaco|right|36|87|30:text_p2_attack_level|869|716|000000|Monaco|left|36|43|30:text_p2_defense_level|959|716|000000|Monaco|left|36|43|30:progress_2_bg|691|536:progress_2_fill|694|539:text_p1_initiative|235|501|000000|Monaco|left|36|88|30:text_p1_attack|235|570|000000|Monaco|left|36|88|30:text_p1_defense|235|645|000000|Monaco|left|36|88|30:text_p1_health|235|716|000000|Monaco|left|36|88|30:text_p1_attack_level|33|716|000000|Monaco|left|36|43|30:text_p1_defense_level|123|716|000000|Monaco|left|36|43|30:progress_1_bg|235|536:progress_1_fill|238|539:btn_surrender_down|399|693:btn_surrender_up|399|693")
 	{
-
+		state = BoardState.Initiative;
+		
 		//build the deck
 		deck = new List<Card>();
 		string[] suits = new string[4] {"spade", "club", "diamond","heart"};
@@ -42,6 +59,9 @@ public class BoardScreen : GameScreen
 		this.AddChildAtIndex (background, 0);
 
 		this.buttons ["surrender"].SignalPress += surrenderHandler;
+
+		playerInitiative = 0;
+		enemyInitiative = 0;
 
 		player = new Character();
 		this.AddChild (player);
@@ -67,8 +87,43 @@ public class BoardScreen : GameScreen
 		addProgressBar ("p1_init", "progress_1_fill", "progress_1_fill");
 		addProgressBar ("p2_init", "progress_2_fill", "progress_1_fill");
 		
-		progress["p1_init"].scaleX = 0.4f;
-		progress["p2_init"].scaleX = 0.7f;
+		progress["p1_init"].scaleX = 0.0f;
+		progress["p2_init"].scaleX = 0.0f;
+	}
+	
+	public void update()
+	{
+		float dt = Time.deltaTime;
+		
+		if(state == BoardState.Cooldown)
+		{
+			cooldownTimer -= dt;
+			if(cooldownTimer <= 0)
+			{
+				state = BoardState.Initiative;
+			}
+		}
+		
+		if(state == BoardState.Initiative)
+		{
+			playerInitiative += dt * player.initiative / 100.0f * initiativeRate;
+			enemyInitiative += dt * enemy.initiative / 100.0f * initiativeRate;
+		
+			if(playerInitiative >= 100.0f)
+			{
+				state = BoardState.PlayerTurn;
+				playerInitiative -= 100.0f;
+				dealAttackCard ();
+				
+			}else if(enemyInitiative >= 100.0f){
+				state = BoardState.EnemyTurn;
+				handleEnemyAttack();
+				enemyInitiative -= 100.0f;
+			}
+			
+			progress["p1_init"].scaleX = Mathf.Min(1.0f, playerInitiative / 100.0f);
+			progress["p2_init"].scaleX = Mathf.Min(1.0f, enemyInitiative / 100.0f);
+		}
 	}
 	
 	override public void willShow()
@@ -87,15 +142,13 @@ public class BoardScreen : GameScreen
 		setText("p2_defense_level",enemy.defenseLevel + "");
 		setText("p2_attack_level",enemy.attackLevel + "");
 		
+		setText("p1_attack",player.attack + "");	
+		setText("p1_defense",player.defense + "");
+		setText("p1_initiative",player.initiative + "");
 		
-		//BOGUS McBOGUSON
-		setText("p1_attack","24");	
-		setText("p1_defense","4");
-		setText("p1_initiative","30");
-		
-		setText("p2_attack",""+RXRandom.Range (4,24));
-		setText("p2_defense",""+RXRandom.Range (4,24));
-		setText("p2_initiative","45");
+		setText("p2_attack",enemy.attack + "");
+		setText("p2_defense",enemy.defense + "");
+		setText("p2_initiative",enemy.initiative + "");
 		
 	}
 	
@@ -103,10 +156,10 @@ public class BoardScreen : GameScreen
 	override public void didShow ()
 	{
 		reshuffle ();
-		deck.RemoveAll(item => item == null);
+		deck.RemoveAll(item => item == null);		
 		
-		Debug.Log ("DECK HAS " + deck.Count + " CARDS");
-		dealAttackCard ();
+		state = BoardState.Cooldown;
+		cooldownTimer = cooldownTimeLimit;
 	}
 
 	void surrenderHandler(FButton button)
@@ -225,13 +278,19 @@ public class BoardScreen : GameScreen
 		{
 			foreach (Card card in attack) 
 			{
-				card.RemoveFromContainer();
-				deck.Add(card);
+				if(card != null)
+				{
+					card.RemoveFromContainer();
+					deck.Add(card);
+				}
 			}
 			foreach (Card card in defense) 
 			{
-				card.RemoveFromContainer();
-				deck.Add(card);
+				if(card != null)
+				{
+					card.RemoveFromContainer();
+					deck.Add(card);
+				}
 			}
 		}
 
@@ -306,10 +365,27 @@ public class BoardScreen : GameScreen
 		Go.to(card, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x + activeCard.width/2).floatProp("y",positions ["dealt_card"].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
 	}
 	
+	void handleEnemyAttack()
+	{
+		//wait 1.5 second when we get back!
+		cooldownTimeLimit = 1.5f;
+		
+		//TODO: weighted random
+		enemy.attackStance = Card.weightedRandomHand();
+		enemy.defenseStance = Card.weightedRandomHand();
+		
+		if(onCombat != null)
+		{
+			onCombat(enemy);
+		}
+	}
 	void resolveAttack()
 	{
+		//wait 1.5 second when we get back!
+		cooldownTimeLimit = 1.5f;
+		
 		player.attackStance = Card.classifyHand(attack);
-		player.defenseStance = Card.classifyHand(attack);
+		player.defenseStance = Card.classifyHand(defense);
 		
 		if(onCombat != null)
 		{

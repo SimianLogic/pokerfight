@@ -8,6 +8,7 @@ public class BattleOverlay : GameScreen
 {
 	public event ContinueHandler onContinue;
 	
+	private Character attacker;
 	public Character player;
 	public Character enemy;
 	
@@ -98,13 +99,18 @@ public class BattleOverlay : GameScreen
 		setText ("p1_defense_level", player.defenseLevel + "");
 		setText ("p1_attack_level",player.attackLevel + "");
 		
-		//TODO: update health progress
+		progress["p1Health"].scaleX = player.health / (float)player.maxHealth;
+		progress["p2Health"].scaleX = enemy.health / (float)enemy.maxHealth;
+		
+		//p1Attac, p1Defense...
 	}
 	
-	private Character attacker;
 	public void playSequence(Character attacker, Character defender)
 	{
 		this.attacker = attacker;
+		
+		Debug.Log ("ATTACKER IS WIELDING " + attacker.attackStance + "/" + attacker.defenseStance);
+		Debug.Log ("DEFENDER IS WIELDING " + defender.attackStance + "/" + defender.defenseStance);
 		
 		showHands(attacker.attackStance, defender.defenseStance);
 	}
@@ -164,9 +170,52 @@ public class BattleOverlay : GameScreen
 		);
 	}
 	
+	public float damageMultiplierForDefense(PokerHand hand)
+	{
+		if(hand == PokerHand.RoyalFlush) return 0.02f;
+		if(hand == PokerHand.StraightFlush) return 0.04f;
+		if(hand == PokerHand.FourOfAKind) return 0.08f;
+		if(hand == PokerHand.FullHouse) return 0.17f;
+		if(hand == PokerHand.Flush) return 0.20f;
+		if(hand == PokerHand.Straight) return 0.33f;
+		if(hand == PokerHand.ThreeOfAKind) return 0.50f;
+		if(hand == PokerHand.TwoPair) return 0.75f;
+		if(hand == PokerHand.OnePair) return 1.00f;
+		
+		//JUNK
+		return 2.0f;
+	}
+	
+	public float damageMultiplierForAttack(PokerHand hand)
+	{
+		if(hand == PokerHand.RoyalFlush) return 50f;
+		if(hand == PokerHand.StraightFlush) return 25f;
+		if(hand == PokerHand.FourOfAKind) return 12f;
+		if(hand == PokerHand.FullHouse) return 6f;
+		if(hand == PokerHand.Flush) return 5f;
+		if(hand == PokerHand.Straight) return 3f;
+		if(hand == PokerHand.ThreeOfAKind) return 2f;
+		if(hand == PokerHand.TwoPair) return 1.5f;
+		if(hand == PokerHand.OnePair) return 1.00f;
+		
+		//JUNK
+		return 0.5f;		
+	}
+	
 	public void showDamage()
 	{
+		if(attacker == player)
+		{
 		
+			int damage = (int)(damageMultiplierForAttack(player.attackStance) * damageMultiplierForDefense(enemy.defenseStance) * player.attack);
+			Debug.Log ("DEAL " + damage + " TO ENEMY");
+			enemy.health = Mathf.Max (0, enemy.health - damage);
+		}else{
+			int damage = (int)(damageMultiplierForAttack(enemy.attackStance) * damageMultiplierForDefense(player.defenseStance) * player.attack);
+			Debug.Log ("DEAL " + damage + " TO PLAYER");
+			player.health = Mathf.Max (0, player.health - damage);
+		}
+		refresh();
 	}
 	
 	public void showHands(PokerHand top, PokerHand bot)
