@@ -20,6 +20,10 @@ public class MenuScreen : GameScreen
 		player = new Character ();
 		player.setShield (1);
 		player.setSword (1);
+		player.health = 100;
+		player.maxHealth = 100;
+		player.attack = 10;
+		player.defense = 10;
 		this.AddChild (player);
 
 

@@ -107,6 +107,7 @@ public class BattleOverlay : GameScreen
 	
 	public void playSequence(Character attacker, Character defender)
 	{
+		healthFlashy.RemoveFromContainer();
 		this.attacker = attacker;
 		
 		Debug.Log ("ATTACKER IS WIELDING " + attacker.attackStance + "/" + attacker.defenseStance);
@@ -204,17 +205,26 @@ public class BattleOverlay : GameScreen
 	
 	public void showDamage()
 	{
+		int damage;
 		if(attacker == player)
 		{
 		
-			int damage = (int)(damageMultiplierForAttack(player.attackStance) * damageMultiplierForDefense(enemy.defenseStance) * player.attack);
+			damage = (int)(damageMultiplierForAttack(player.attackStance) * damageMultiplierForDefense(enemy.defenseStance) * player.attack);
 			Debug.Log ("DEAL " + damage + " TO ENEMY");
 			enemy.health = Mathf.Max (0, enemy.health - damage);
 		}else{
-			int damage = (int)(damageMultiplierForAttack(enemy.attackStance) * damageMultiplierForDefense(player.defenseStance) * player.attack);
+			damage = (int)(damageMultiplierForAttack(enemy.attackStance) * damageMultiplierForDefense(player.defenseStance) * player.attack);
 			Debug.Log ("DEAL " + damage + " TO PLAYER");
 			player.health = Mathf.Max (0, player.health - damage);
 		}
+		
+		this.AddChild (healthFlashy);
+		healthFlashy.text = "-" + damage;
+		healthFlashy.scale = 1.0f;
+		healthFlashy.x = positions["defense_anchor"].x;
+		healthFlashy.y = positions["defense_anchor"].y - healthFlashy.textRect.height/2;
+		Go.to (healthFlashy, 0.1f, new TweenConfig().floatProp("scale",1.5f).setEaseType (EaseType.BackOut));
+		
 		refresh();
 	}
 	

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -40,6 +40,7 @@ public class Pokerfight : MonoBehaviour
 		board = new BoardScreen ();
 		board.onGameOver += handleGameOver;
 		board.onCombat += handleCombat;
+		board.onYouWin += handleYouWin;
 
 		menu = new MenuScreen ();
 		menu.startHandler += onMenuStart;
@@ -48,7 +49,6 @@ public class Pokerfight : MonoBehaviour
 		battle.onContinue += onBattleContinue;
 		
 		recap = new RecapScreen();
-		recap.onContinue += onRecapContinue;
 		
 		loadScreen(menu);
 	}
@@ -106,12 +106,30 @@ public class Pokerfight : MonoBehaviour
 
 		//come back to the menu: new character!
 		battle.RemoveFromContainer();
-		menu.buttons["start"].isEnabled = true;
 		
-		menu.player.randomize();
-		menu.player.setSword (1);
-		menu.player.setShield (1);
-		loadScreen (menu);
+		recap.winner.mimic (board.enemy);
+		recap.loser.mimic (board.player);
+		recap.showLose();
+		
+		Futile.stage.AddChild(recap);
+		
+		recap.onContinue -= onRecapNextFight;
+		recap.onContinue += onRecapToMenu;
+	}
+	
+	public void handleYouWin()
+	{
+		//come back to the menu: new character!
+		battle.RemoveFromContainer();
+		
+		recap.winner.mimic (board.player);
+		recap.loser.mimic (board.enemy);
+		recap.showWin();
+		
+		Futile.stage.AddChild(recap);
+		
+		recap.onContinue += onRecapNextFight;
+		recap.onContinue -= onRecapToMenu;
 	}
 
 	
@@ -121,19 +139,46 @@ public class Pokerfight : MonoBehaviour
 		menu.buttons["start"].isEnabled = false;
 		menu.AddChild(battle);
 		
+		battle.healthFlashy.RemoveFromContainer();
 		battle.player.mimic (menu.player);
 		battle.enemy.randomize();
 	}
 	
 	//------------- RECAP ALERT LISTENERS
-	public void onRecapContinue()
+	public void onRecapToMenu()
 	{
+		recap.RemoveFromContainer();
+		menu.buttons["start"].isEnabled = true;
 		
+		menu.player.randomize();
+		menu.player.setSword (1);
+		menu.player.setShield (1);
+		menu.player.health = 100;
+		menu.player.maxHealth = 100;
+		menu.player.attack = 10;
+		menu.player.defense = 10;
+		
+		loadScreen (menu);
+	}
+	
+	//eventually this would take you to the store instead
+	public void onRecapNextFight()
+	{
+		recap.RemoveFromContainer();
+		Futile.stage.AddChild(battle);
+		
+		board.nextFight();
+		battle.healthFlashy.RemoveFromContainer();
+		battle.player.mimic (menu.player);
+		battle.enemy.randomize();
+		battle.refresh();
 	}
 	
 	//------------- BATTLE ALERT LISTENERS
 	public void onBattleContinue()
 	{
+		battle.RemoveFromContainer();
+		
 		if(currentScreen == menu)
 		{
 			board.player.mimic (menu.player);
@@ -147,8 +192,6 @@ public class Pokerfight : MonoBehaviour
 			board.player.mimic (battle.player);
 			board.enemy.mimic (battle.enemy);
 			board.refresh();
-			
-			board.RemoveChild (battle);
 			
 			board.willShow();
 			board.didShow();

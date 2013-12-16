@@ -71,7 +71,10 @@ public class RecapScreen : GameScreen
 		this.AddChild (youWin);
 		this.AddChild (coin);
 		
-		setText ("reward", 12345 + "");
+		int purse = RXRandom.Range (50,150);
+		winner.coins += purse;
+		
+		setText ("reward", purse + "");
 		setText ("reward_copy", "Your Reward");
 		
 		youLose.RemoveFromContainer();
@@ -83,7 +86,7 @@ public class RecapScreen : GameScreen
 		coin.RemoveFromContainer();
 		this.AddChild(youLose);
 		
-		setText ("reward", "1");
+		setText ("reward", loser.kills + "");
 		setText ("reward_copy","Kill Count");
 	}
 	
