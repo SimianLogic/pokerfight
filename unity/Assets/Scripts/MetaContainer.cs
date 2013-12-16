@@ -28,8 +28,6 @@ public class MetaContainer : FContainer
 		labels[field].text = text;
 		labels[field].x = positions[field].x;
 		labels[field].y = positions[field].y;
-		
-		Debug.Log ("put " + field + " at (" + positions[field] + ")");
 	}
 	
 	internal void addProgressBar(string name, string position_name, string fill_name)

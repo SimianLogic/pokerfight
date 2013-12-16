@@ -219,6 +219,10 @@
             <filename>club_12.png</filename>
             <filename>club_13.png</filename>
             <filename>card_back.png</filename>
+            <filename>battle_complete_screen.png</filename>
+            <filename>battle_complete_screen/coin.png</filename>
+            <filename>battle_complete_screen/Game_Over!.png</filename>
+            <filename>battle_complete_screen/You_Won_the_Fight.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

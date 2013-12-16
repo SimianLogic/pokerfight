@@ -211,7 +211,7 @@ public class Pokerfight : MonoBehaviour
 		
 		board.nextFight();
 		battle.healthFlashy.RemoveFromContainer();
-		battle.player.mimic (menu.player);
+		battle.player.mimic (board.player);
 		battle.enemy.randomize();
 		battle.refresh();
 	}
@@ -223,7 +223,7 @@ public class Pokerfight : MonoBehaviour
 		
 		if(currentScreen == menu)
 		{
-			board.player.mimic (menu.player);
+			board.player.mimic (battle.player);
 			board.enemy.mimic (battle.enemy);
 			
 			loadScreen (board, ScreenSourceDirection.Instant);			
