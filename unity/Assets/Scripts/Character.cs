@@ -107,6 +107,28 @@ public class Character : MetaContainer
 		bob.mimic (this);
 		return bob;
 	}
+	
+	public string toString()
+	{
+		return headId + "_" + hatId + "_" + faceId + "_" + shirtId + "_" + pantsId + "_" + shoesId + "_" + bowId + "_" + swordId + "_" + shieldId + "_";
+	}
+	
+	public void fromString(string save)
+	{
+		string[] data = save.Split("_"[0]);
+		
+		setHead(System.Int32.Parse(data[0]));
+		setHat(System.Int32.Parse(data[1]));
+		setFace(System.Int32.Parse(data[2]));
+		
+		setShirt(System.Int32.Parse(data[3]));
+		setPants(System.Int32.Parse(data[4]));
+		setShoes(System.Int32.Parse(data[5]));
+		
+		setBow(System.Int32.Parse(data[6]));
+		setSword(System.Int32.Parse(data[7]));
+		setShield(System.Int32.Parse(data[8]));
+	}
 
 	public void mimic(Character target)
 	{

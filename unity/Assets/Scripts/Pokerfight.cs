@@ -21,7 +21,11 @@ public class Pokerfight : MonoBehaviour
 	private MenuScreen menu;
 	private BattleOverlay battle;
 	private RecapScreen recap;
-
+	
+	
+	private Character hof1;
+	private Character hof2;
+	private Character hof3;
 	void Start () {
 		//init
 		FutileParams fparams = new FutileParams (true, true, true, true);
@@ -51,6 +55,27 @@ public class Pokerfight : MonoBehaviour
 		recap = new RecapScreen();
 		
 		loadScreen(menu);
+		
+		initHof();
+	}
+	
+	public void initHof()
+	{
+		//MAGIC NUMBER
+//		hof1 = new Character();
+//		hof2 = new Character();
+//		hof3 = new Character();
+//		
+//		hof1.scale = 2.0f;
+//		hof2.scale = 2.0f;
+//		hof3.scale = 2.0f;
+//		
+//		float box_size = 170;
+//		float padding = (box_size-hof1.width)/2;
+//		
+//		player.x = positions ["player_1"].x + padding;
+//		player.y = positions ["player_1"].y - padding - player.height;
+		
 	}
 	
 	//adapted a bit from the Banana demo in Futile
@@ -101,8 +126,19 @@ public class Pokerfight : MonoBehaviour
 	
 	public void handleGameOver()
 	{
-		//TODO: cache our best heroes for later...
-		//TODO: move us to game over screen...
+//		int p1_kills = PlayerPrefs.GetInt ("HOF_1_Kills");
+//		int p2_kills = PlayerPrefs.GetInt ("HOF_2_Kills");
+//		int p3_kills = PlayerPrefs.GetInt ("HOF_3_Kills");
+//		
+//		//no time to do proper sorting...
+//		if(board.player.kills > p1_kills)
+//		{
+//			saveHOF(board.player, 1);
+//		}else if(board.player.kills > p2_kills){
+//			saveHOF(board.player, 2);
+//		}else if(board.player.kills > p3_kills){
+//			saveHOF(board.player, 3);
+//		}
 
 		//come back to the menu: new character!
 		battle.RemoveFromContainer();
@@ -115,6 +151,12 @@ public class Pokerfight : MonoBehaviour
 		
 		recap.onContinue -= onRecapNextFight;
 		recap.onContinue += onRecapToMenu;
+	}
+	
+	public void saveHOF(Character player, int slot)
+	{
+		PlayerPrefs.SetInt("HOF_" + slot + "_Kills", player.kills);
+		PlayerPrefs.SetString("HOF_" + slot + "_Data", player.toString());
 	}
 	
 	public void handleYouWin()
