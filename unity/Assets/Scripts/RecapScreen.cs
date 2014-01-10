@@ -11,13 +11,8 @@ public class RecapScreen : GameScreen
 	public FSprite youWin;
 	public FSprite youLose;
 	public FSprite coin;
-	public RecapScreen() : base("modal|0|0:popup_bg|113|87:blood|320|466:text_reward|647|323|000000|Monaco|left|36|133|30:text_reward_copy|545|265|000000|Monaco|center|36|246|30:btn_continue_down|625|505:btn_continue_up|625|505:coin|578|305:loser_anchor|431|477:winner_anchor|239|350:title_anchor|508|167:Game_Over!|285|142:You_Won_the_Fight|147|143")
+	public RecapScreen() : base("battle_complete_screen")
 	{
-		FSprite bg = new FSprite("battle_complete_screen");
-		this.AddChildAtIndex(bg, 0);
-		bg.x = 512;
-		bg.y = 384;
-		
 		FSprite modal = new FSprite("modal");
 		this.AddChildAtIndex(modal, 0);
 		modal.width = 1024;

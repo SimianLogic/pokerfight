@@ -26,15 +26,12 @@ public class MetaContainer : FContainer
 		labels[field].y = positions[field].y;
 	}
 	
-	internal void addProgressBar(string name, string position_name, string fill_name)
-	{
-		FSprite progress_bar = new FSprite(fill_name);
+	internal void addProgressBar(string name, string fill_name)
+	{		
+		FSprite progress_bar = images[fill_name];
+
 		progress_bar.anchorX = 0.0f;
-		
-		this.AddChild(progress_bar);
-		
-		progress_bar.x = positions[position_name].x;
-		progress_bar.y = positions[position_name].y - progress_bar.height/2;
+		progress_bar.x -= progress_bar.width/2;
 		
 		progress[name] = progress_bar;
 	}

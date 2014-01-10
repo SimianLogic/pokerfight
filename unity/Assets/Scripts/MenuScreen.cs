@@ -28,8 +28,8 @@ public class MenuScreen : GameScreen
 		float box_size = 160;
 		float padding = (box_size-player.width)/2;
 		
-		player.x = positions ["player"].x;
-		player.y = positions ["player"].y;
+		player.x = positions ["menu_player"].x;
+		player.y = positions ["menu_player"].y;
 	}
 
 	public void randomizeHandler(FButton button)

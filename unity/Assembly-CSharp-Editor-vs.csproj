@@ -48,13 +48,18 @@
   <ItemGroup>
      <Compile Include="Assets\Futile\Rix\Editor\RXProfilerEditor.cs" />
      <Compile Include="Assets\Futile\Rix\Editor\RXWatcherLinkEditor.cs" />
-     <None Include="Assets\Resources\fonts_cards_modal.txt" />
+     <None Include="Assets\Resources\Metadata\battle_complete_screen.txt" />
      <None Include="Assets\Futile\Resources\Shaders\AdditiveColor.shader" />
      <None Include="Assets\Futile\Resources\Shaders\Additive.shader" />
+     <None Include="Assets\Resources\Metadata\characters.txt" />
      <None Include="Assets\Resources\monaco_36.fnt" />
+     <None Include="Assets\Resources\Metadata\board_layout.txt" />
      <None Include="Assets\Futile\Resources\Shaders\SolidColored.shader" />
-     <None Include="Assets\Resources\main_menu.txt" />
+     <None Include="Assets\Resources\atlas_0.txt" />
+     <None Include="Assets\Resources\Metadata\main_menu.txt" />
      <None Include="Assets\Futile\Resources\Shaders\Basic.shader" />
+     <None Include="Assets\Resources\atlas_1.txt" />
+     <None Include="Assets\Resources\Metadata\battle_screen.txt" />
      <None Include="Assets\Futile\Resources\Shaders\Solid.shader" />
  <Reference Include="Assets\Futile\ThirdParty\GoKit">
  <HintPath>Assets\Futile\ThirdParty\GoKit.dll</HintPath>

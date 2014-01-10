@@ -34,24 +34,24 @@ public class Pokerfight : MonoBehaviour
 		Futile.instance.Init (fparams);
 
 		//load everything until it's a problem
-		Futile.atlasManager.LoadAtlas("fonts_cards_modal");
-		Futile.atlasManager.LoadAtlas("main_menu");
+		Futile.atlasManager.LoadAtlas("atlas_0");
+		Futile.atlasManager.LoadAtlas("atlas_1");
 
 		//font
 		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -30.0f);
 
-		// board = new BoardScreen();
-		// board.onGameOver += handleGameOver;
-		// board.onCombat += handleCombat;
-		// board.onYouWin += handleYouWin;
+		board = new BoardScreen();
+		board.onGameOver += handleGameOver;
+		board.onCombat += handleCombat;
+		board.onYouWin += handleYouWin;
 
 		menu = new MenuScreen();
 		menu.startHandler += onMenuStart;
 
-		// battle = new BattleOverlay();
-		// battle.onContinue += onBattleContinue;
+		battle = new BattleOverlay();
+		battle.onContinue += onBattleContinue;
 		
-		// recap = new RecapScreen();
+		recap = new RecapScreen();
 		
 		loadScreen(menu);
 		
