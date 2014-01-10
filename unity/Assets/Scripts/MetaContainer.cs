@@ -4,24 +4,19 @@ using System.Collections.Generic;
 
 public class MetaContainer : FContainer
 {
-
-	public string metadata;
+	public int rootWidth;
+	public int rootHeight;
+	
 	public Dictionary<string, Vector2> positions;
 	public Dictionary<string, FLabel> labels;
 	public Dictionary<string, FButton> buttons;
 	public Dictionary<string, FSprite> progress;
 	public Dictionary<string, FSprite> images;	
 
-	public MetaContainer() : base()
-	{
-		//the subclass constructor will provide the metadata and call processMetadata...
-		//this is a kludgy way to let the Character set maxHeight to 64 instead of 768
-	}
-
-	public MetaContainer(string metadata)
+	public MetaContainer(string metadata_filename) : base()
 	{	
-		this.metadata = metadata;
-		processMetadata (768);
+		string text = (Resources.Load("Metadata/" + metadata_filename, typeof(TextAsset)) as TextAsset).text;
+		processMetadata(text);
 	}
 	
 	public void setText(string field, string text)
@@ -44,7 +39,7 @@ public class MetaContainer : FContainer
 		progress[name] = progress_bar;
 	}
 	
-	internal void processMetadata(int maxHeight)
+	internal void processMetadata(string metadata)
 	{
 		//master list of all name -> coordinates
 		positions = new Dictionary<string,Vector2>();
@@ -61,6 +56,15 @@ public class MetaContainer : FContainer
 		{
 			string[] data = obj.Split("|"[0]);
 			string type = data[0].Split("_"[0])[0];
+			
+			//these two don't have an x & a y!
+			if(data[0] == "root_width"){
+				rootWidth = System.Int32.Parse(data[1]);
+				continue;
+			}else if(data[0] == "root_height"){
+				rootHeight = System.Int32.Parse(data[1]);				
+				continue;
+			}
 			
 			int x = System.Int32.Parse(data[1]);
 			int y = System.Int32.Parse(data[2]);

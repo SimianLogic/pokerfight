@@ -10,6 +10,7 @@
 
 # From ?
 *.unityproj
+*.csproj
 
 FutileDev/
 FutileDev.meta
