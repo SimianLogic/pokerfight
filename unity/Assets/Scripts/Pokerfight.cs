@@ -243,7 +243,7 @@ public class Pokerfight : MonoBehaviour
 	void Update () {
 		if(currentScreen == board)
 		{
-			// board.update();
+			board.update();
 		}
 	}
 

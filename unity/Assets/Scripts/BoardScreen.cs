@@ -64,23 +64,18 @@ public class BoardScreen : GameScreen
 		player = new Character();
 		this.AddChild (player);
 		
-		//MAGIC NUMBER
-		float box_size = 170;
 		player.scale = 2.0f;
 		
-		float padding = (box_size-player.width)/2;
-		
-		player.x = positions ["player_1"].x + padding;
-		player.y = positions ["player_1"].y - padding - player.height;
-		
+		player.x = positions ["player_1"].x;
+		player.y = positions ["player_1"].y;
 		
 		enemy = new Character();
 		this.AddChild (enemy);
 		
 		enemy.scale = 2.0f;
 		
-		enemy.x = positions ["player_2"].x + padding;
-		enemy.y = positions ["player_2"].y - padding - player.height;
+		enemy.x = positions ["player_2"].x;
+		enemy.y = positions ["player_2"].y;
 		
 		addProgressBar ("p1_init", "progress_1_fill");
 		addProgressBar ("p2_init", "progress_2_fill");
@@ -204,36 +199,36 @@ public class BoardScreen : GameScreen
 		{
 			Debug.Log ("DEAL ATTACK CARD");
 		}else{
-			Debug.Log ("ALREADY HAVE A ATTACK CARD");
+			Debug.Log ("ALREADY HAVE AN ATTACK CARD");
 			return;
 		}
 		
-		Card first_attack = deck [0];
-		deck.RemoveAt (0);
-		attack [2] = first_attack;
+		Card first_attack = deck[0];
+		deck.RemoveAt(0);
+		attack[2] = first_attack;
 		
-		this.AddChild (first_attack);
-		first_attack.show ();
+		this.AddChild(first_attack);
+		first_attack.show();
 		
-		//		first_attack.rotation = 90;
-		//		first_defense.rotation = 90;
+		//	first_attack.rotation = 90;
+		//	first_defense.rotation = 90;
 		
-		first_attack.x = positions ["deck"].x + first_attack.width/2;
-		first_attack.y = positions ["deck"].y - first_attack.height/2;
+		first_attack.x = positions ["deck"].x;
+		first_attack.y = positions ["deck"].y;
 		
 		if(dealAttackConfig == null)
 		{
-			dealAttackConfig = new TweenConfig ()
+			dealAttackConfig = new TweenConfig()
 				.floatProp ("rotation", 90.0f)
-				.floatProp("x", positions ["attack_3"].x + first_attack.height / 2)
-				.floatProp("y", positions ["attack_3"].y - first_attack.width / 2)
+				.floatProp("x", positions ["attack_3"].x)
+				.floatProp("y", positions ["attack_3"].y)
 				.setEaseType(EaseType.BackOut)
 				.onComplete(thisTween => {
 					dealDefenseCard();
 				});
 		}
 		
-		Go.to (first_attack, 0.5f,dealAttackConfig);
+		Go.to(first_attack, 0.5f,dealAttackConfig);
 	}
 	
 	private TweenConfig dealDefenseConfig;
@@ -246,27 +241,27 @@ public class BoardScreen : GameScreen
 			Debug.Log ("ALREADY HAVE A DEFENSE CARD");
 			return;
 		}
-		Card first_defense = deck [0];
-		deck.RemoveAt (0);
-		defense [2] = first_defense;
+		Card first_defense = deck[0];
+		deck.RemoveAt(0);
+		defense[2] = first_defense;
 		
-		this.AddChild (first_defense);
-		first_defense.show ();
+		this.AddChild(first_defense);
+		first_defense.show();
 		
-		first_defense.x = positions ["deck"].x + first_defense.width/2;
-		first_defense.y = positions ["deck"].y - first_defense.height/2;
+		first_defense.x = positions ["deck"].x;
+		first_defense.y = positions ["deck"].y;
 		
 		if(dealDefenseConfig == null)
 		{
-			dealDefenseConfig = new TweenConfig ()
+			dealDefenseConfig = new TweenConfig()
 				.floatProp ("rotation", 90.0f)
-					.floatProp("x", positions ["defense_3"].x + first_defense.height / 2)
-					.floatProp("y", positions ["defense_3"].y - first_defense.width / 2)
-					.setEaseType(EaseType.BackOut)
-					.onComplete(thisTween => {
-						Debug.Log ("TWEEN DEAL CARD");
-						dealCard();
-					});
+				.floatProp("x", positions ["defense_3"].x)
+				.floatProp("y", positions ["defense_3"].y)
+				.setEaseType(EaseType.BackOut)
+				.onComplete(thisTween => {
+					Debug.Log ("TWEEN DEAL CARD");
+					dealCard();
+				});
 		}
 		Go.to(first_defense, 0.5f, dealDefenseConfig);
 	}
@@ -275,27 +270,27 @@ public class BoardScreen : GameScreen
 	void dealCard()
 	{	
 		Debug.Log ("DEAL CARD");
-		activeCard = deck [0];
+		activeCard = deck[0];
 		deck.RemoveAt(0);
 		
 		this.AddChild (activeCard);
 		activeCard.rotation = 0;
-		activeCard.x = positions ["deck"].x + activeCard.width/2;
-		activeCard.y = positions ["deck"].y - activeCard.height/2;
-		activeCard.show ();
+		activeCard.x = positions ["deck"].x;
+		activeCard.y = positions ["deck"].y;
+		activeCard.show();
 		
 		if(dealCardConfig == null)
 		{
-			dealCardConfig = new TweenConfig ()
-				.floatProp("x",positions ["dealt_card"].x + activeCard.width/2)
-					.floatProp("y",positions ["dealt_card"].y - activeCard.height/2)
-					.setEaseType(EaseType.BackIn);
+			dealCardConfig = new TweenConfig()
+				.floatProp("x",positions ["dealt_card"].x)
+				.floatProp("y",positions ["dealt_card"].y)
+				.setEaseType(EaseType.BackIn);
 		}
 		
 		Go.to(activeCard, 0.25f, dealCardConfig);
 		
 		activeCard.draggable = true;
-		activeCard.dropHandler += cardDroppedHandler;//new CardDroppedEventHandler(cardDroppedHandler);
+		activeCard.dropHandler += cardDroppedHandler; //new CardDroppedEventHandler(cardDroppedHandler);
 	}
 	
 	void reshuffle() 
@@ -342,14 +337,14 @@ public class BoardScreen : GameScreen
 		
 		for(int i = 0; i < 5; i++)
 		{
-			Rect attack_rect = new Rect(positions["attack_" + (i+1)].x, positions["attack_" + (i+1)].y - card.height, card.width, card.height);
+			Rect attack_rect = new Rect(positions["attack_" + (i+1)].x - card.width/2, positions["attack_" + (i+1)].y - card.height/2, card.width, card.height);
 			Debug.Log (attack_rect + " vs " + hit_test);
 			if(attack_rect.Contains(hit_test))
 			{
 				if(attack[i] == null)
 				{
 					attack[i] = card;
-					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x + card.width/2).floatProp("y",positions ["attack_" + (i+1)].y - card.height/2).setEaseType(EaseType.ExpoIn));
+					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["attack_" + (i+1)].x).floatProp("y",positions ["attack_" + (i+1)].y).setEaseType(EaseType.ExpoIn));
 					
 					card.dropHandler -= cardDroppedHandler;
 					
@@ -364,13 +359,13 @@ public class BoardScreen : GameScreen
 				}
 			}
 			
-			Rect defense_rect = new Rect(positions["defense_" + (i+1)].x, positions["defense_" + (i+1)].y - card.height, card.width, card.height);
+			Rect defense_rect = new Rect(positions["defense_" + (i+1)].x - card.width/2, positions["defense_" + (i+1)].y - card.height/2, card.width, card.height);
 			if(defense_rect.Contains(hit_test))
 			{
 				if(defense[i] == null)
 				{
 					defense[i] = card;
-					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x + card.width/2).floatProp("y",positions ["defense_" + (i+1)].y - card.height/2).setEaseType(EaseType.ExpoIn));
+					Go.to(card, 0.1f, new TweenConfig().floatProp("x",positions ["defense_" + (i+1)].x).floatProp("y",positions ["defense_" + (i+1)].y).setEaseType(EaseType.ExpoIn));
 					
 					card.dropHandler -= cardDroppedHandler;
 					
@@ -389,7 +384,7 @@ public class BoardScreen : GameScreen
 		
 		activeCard = card;
 		card.draggable = true;
-		Go.to(card, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x + activeCard.width/2).floatProp("y",positions ["dealt_card"].y - activeCard.height/2).setEaseType(EaseType.ExpoIn));
+		Go.to(card, 0.25f, new TweenConfig().floatProp("x",positions ["dealt_card"].x).floatProp("y",positions ["dealt_card"].y).setEaseType(EaseType.ExpoIn));
 	}
 	
 	void handleEnemyAttack()
