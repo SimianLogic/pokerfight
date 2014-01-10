@@ -30,33 +30,32 @@ public class Pokerfight : MonoBehaviour
 		//init
 		FutileParams fparams = new FutileParams (true, true, true, true);
 		fparams.AddResolutionLevel(1024.0f, 1.0f, 1.0f, ""); //ipad, 1024x768
-		fparams.origin = new Vector2 (0.0f, 0.0f);
 
 		Futile.instance.Init (fparams);
 
-		//load our art
-		Futile.atlasManager.LoadAtlas("all_cards");
-		Futile.atlasManager.LoadAtlas("board_layout");
+		//load everything until it's a problem
+		Futile.atlasManager.LoadAtlas("fonts_cards_modal");
+		Futile.atlasManager.LoadAtlas("main_menu");
 
 		//font
 		Futile.atlasManager.LoadFont("monaco","monaco_36", "monaco_36", 0.0f, -30.0f);
 
-		board = new BoardScreen ();
-		board.onGameOver += handleGameOver;
-		board.onCombat += handleCombat;
-		board.onYouWin += handleYouWin;
+		// board = new BoardScreen();
+		// board.onGameOver += handleGameOver;
+		// board.onCombat += handleCombat;
+		// board.onYouWin += handleYouWin;
 
-		menu = new MenuScreen ();
+		menu = new MenuScreen();
 		menu.startHandler += onMenuStart;
 
-		battle = new BattleOverlay();
-		battle.onContinue += onBattleContinue;
+		// battle = new BattleOverlay();
+		// battle.onContinue += onBattleContinue;
 		
-		recap = new RecapScreen();
+		// recap = new RecapScreen();
 		
 		loadScreen(menu);
 		
-		initHof();
+		// initHof();
 	}
 	
 	public void initHof()
@@ -93,7 +92,7 @@ public class Pokerfight : MonoBehaviour
 		
 		if (direction == ScreenSourceDirection.Instant) 
 		{
-			Futile.stage.RemoveChild (currentScreen);
+			Futile.stage.RemoveChild(currentScreen);
 			screen.willShow();
 			currentScreen = screen;
 			Futile.stage.AddChild(screen);
@@ -244,7 +243,7 @@ public class Pokerfight : MonoBehaviour
 	void Update () {
 		if(currentScreen == board)
 		{
-			board.update();
+			// board.update();
 		}
 	}
 

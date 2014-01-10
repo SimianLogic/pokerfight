@@ -10,6 +10,7 @@ public class MetaContainer : FContainer
 	public Dictionary<string, FLabel> labels;
 	public Dictionary<string, FButton> buttons;
 	public Dictionary<string, FSprite> progress;
+	public Dictionary<string, FSprite> images;	
 
 	public MetaContainer() : base()
 	{
@@ -45,12 +46,16 @@ public class MetaContainer : FContainer
 	
 	internal void processMetadata(int maxHeight)
 	{
+		//master list of all name -> coordinates
 		positions = new Dictionary<string,Vector2>();
+		
+		//lists of our buttons, labels, progress bars, and images
 		labels = new Dictionary<string, FLabel>();
 		buttons = new Dictionary<string, FButton>();
 		progress = new Dictionary<string, FSprite>();
+		images = new Dictionary<string, FSprite>();
 
-		string[] objects = metadata.Split(":"[0]);
+		string[] objects = metadata.Split("+"[0]);
 
 		foreach(string obj in objects)
 		{
@@ -58,7 +63,9 @@ public class MetaContainer : FContainer
 			string type = data[0].Split("_"[0])[0];
 			
 			int x = System.Int32.Parse(data[1]);
-			int y = maxHeight - System.Int32.Parse(data[2]);
+			int y = System.Int32.Parse(data[2]);
+			
+			Debug.Log(data[0] + " - " + x + "," + y);
 
 			if(type == "btn"){
 				if(data[0].IndexOf("_down") >= 0)
@@ -67,30 +74,35 @@ public class MetaContainer : FContainer
 					continue;
 				}
 
-				string button_name = data[0].Replace ("btn_","").Replace("_up","");
+				string button_name = data[0].Replace("btn_","").Replace("_up","");
 				FButton button = new FButton(data[0], "btn_" + button_name + "_down");
 
 				this.AddChild(button);
-				button.x = x + button.sprite.width/2;
-				button.y = y - button.sprite.height/2;
+				button.x = x;
+				button.y = y;
 
 				buttons[button_name] = button;
 				positions[button_name] = new Vector2(x,y);
 			}else if(type == "text"){
+			  //TODO: font size
+			  //TODO: font color
+			  //TODO: font selection (MOAR FONT)
+			  
 				FLabel label = new FLabel("monaco","00");
 				this.AddChild(label);
 				
 				int label_width = System.Int32.Parse(data[7]);
-				Debug.Log (data[5] + " <--- " + data[0]);
+				label.anchorY = 0.0f;
+
 				if(data[5] == "center")
 				{
-					//leave the anchors put
-					x += label_width/2;
+          //all good! default is centered
 				}else if(data[5] == "left"){
 					label.anchorX = 0.0f;
+	        		x -= label_width / 2;
 				}else if(data[5] == "right"){
 					label.anchorX = 1.0f;
-					x += label_width;
+					x += label_width / 2;
 				}
 				
 				label.x = x;
@@ -100,6 +112,17 @@ public class MetaContainer : FContainer
 				positions[data[0].Substring(5)] = new Vector2(x,y);
 			}else{
 				//x,y in this point are assuming y is at the top left...
+				positions[data[0]] = new Vector2(x,y);
+			
+				FSprite sprite = new FSprite(data[0]);
+				this.AddChild(sprite);
+
+				Debug.Log("   -> anchorX = " + sprite.anchorX);
+				
+				sprite.x = x;
+				sprite.y = y;
+				
+				images[data[0]] = sprite;
 				positions[data[0]] = new Vector2(x,y);
 			}
 		}
