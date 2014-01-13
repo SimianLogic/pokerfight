@@ -2144,14 +2144,6 @@
 	"spriteSourceSize": {"x":4,"y":18,"w":14,"h":30},
 	"sourceSize": {"w":64,"h":64}
 },
-"title_anchor.png":
-{
-	"frame": {"x":1756,"y":714,"w":13,"h":12},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":12},
-	"sourceSize": {"w":13,"h":12}
-},
 "torso_1.png":
 {
 	"frame": {"x":1719,"y":616,"w":54,"h":20},
@@ -2231,6 +2223,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:98600039bc6f214ecd771053b39f0bc6:188bf3ab4a104bbb766622ced4a86647:96177c3c5f2bcac8a3b91513a1a9dec7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:fccca7dee0007f7909f5e4a1559f5de9:15e6362ca34a1153ddff5a7395c824d6:96177c3c5f2bcac8a3b91513a1a9dec7$"
 }
 }
